@@ -307,17 +307,17 @@ export default function MenuPage() {
       {/* CATEGORY TABS */}
       <section className="sticky z-40" style={{ top: 88 }}>
         <div style={{
-          background: 'rgba(7, 7, 7, 0.85)',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
-          borderBottom: '1px solid rgba(200, 169, 126, 0.1)',
+          background: 'rgba(7, 7, 7, 0.92)',
+          backdropFilter: 'blur(30px)',
+          WebkitBackdropFilter: 'blur(30px)',
         }}>
           <div className="r-container" style={{ maxWidth: 1100, margin: '0 auto', padding: '0 48px' }}>
-            <div style={{ position: 'relative', padding: '16px 0' }}>
+            <div style={{ position: 'relative', padding: '20px 0' }}>
+              {/* Scrollable tabs */}
               <div
                 ref={tabContainerRef}
                 className="flex overflow-x-auto no-scrollbar"
-                style={{ gap: 6, position: 'relative', padding: '4px' }}
+                style={{ gap: 8, position: 'relative', padding: '4px', alignItems: 'center' }}
               >
                 {/* Sliding pill indicator */}
                 <div
@@ -327,11 +327,11 @@ export default function MenuPage() {
                     left: indicator.left,
                     width: indicator.width,
                     height: 'calc(100% - 8px)',
-                    background: 'linear-gradient(135deg, rgba(200, 169, 126, 0.15), rgba(200, 169, 126, 0.08))',
-                    border: '1px solid rgba(200, 169, 126, 0.25)',
-                    borderRadius: 10,
-                    transition: 'all 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
+                    background: 'linear-gradient(135deg, #C8A97E, #A08456)',
+                    borderRadius: 50,
+                    transition: 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
                     pointerEvents: 'none',
+                    boxShadow: '0 4px 24px rgba(200, 169, 126, 0.3), 0 0 60px rgba(200, 169, 126, 0.08)',
                   }}
                 />
                 {categoryGroups.map((group, i) => (
@@ -339,33 +339,50 @@ export default function MenuPage() {
                     key={group.label}
                     onClick={() => setActiveGroup(i)}
                     style={{
-                      padding: '12px 26px',
+                      padding: '14px 32px',
                       fontSize: 13,
-                      letterSpacing: '0.12em',
+                      letterSpacing: '0.14em',
                       textTransform: 'uppercase' as const,
                       whiteSpace: 'nowrap' as const,
-                      color: activeGroup === i ? '#E8D5B5' : '#A3A3A3',
+                      color: activeGroup === i ? '#070707' : '#A3A3A3',
                       background: 'transparent',
                       border: 'none',
-                      borderRadius: 10,
+                      borderRadius: 50,
                       cursor: 'pointer',
-                      fontWeight: activeGroup === i ? 600 : 400,
+                      fontWeight: activeGroup === i ? 700 : 500,
                       position: 'relative' as const,
                       zIndex: 1,
-                      transition: 'color 0.35s ease, font-weight 0.35s ease',
+                      transition: 'color 0.4s ease, font-weight 0.4s ease, transform 0.3s ease',
                       fontFamily: 'inherit',
+                      transform: activeGroup === i ? 'scale(1)' : 'scale(1)',
                     }}
                     onMouseEnter={(e) => {
-                      if (activeGroup !== i) e.currentTarget.style.color = '#C8A97E';
+                      if (activeGroup !== i) {
+                        e.currentTarget.style.color = '#E8D5B5';
+                        e.currentTarget.style.transform = 'scale(1.05)';
+                      }
                     }}
                     onMouseLeave={(e) => {
-                      if (activeGroup !== i) e.currentTarget.style.color = '#A3A3A3';
+                      if (activeGroup !== i) {
+                        e.currentTarget.style.color = '#A3A3A3';
+                        e.currentTarget.style.transform = 'scale(1)';
+                      }
                     }}
                   >
                     {group.label}
                   </button>
                 ))}
               </div>
+
+              {/* Bottom gold accent line */}
+              <div style={{
+                position: 'absolute',
+                bottom: 0,
+                left: '5%',
+                right: '5%',
+                height: 1,
+                background: 'linear-gradient(90deg, transparent, rgba(200, 169, 126, 0.2), transparent)',
+              }} />
             </div>
           </div>
         </div>
