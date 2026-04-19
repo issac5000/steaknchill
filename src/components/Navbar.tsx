@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
@@ -63,19 +64,28 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center relative z-10" style={{ gap: 14 }}>
-            <div>
-              <span
-                className="font-heading text-gold"
-                style={{
-                  fontSize: scrolled ? 18 : 22,
-                  letterSpacing: "0.03em",
-                  transition: "font-size 0.7s cubic-bezier(0.22, 1, 0.36, 1)",
-                }}
-              >
-                Steak N&apos; <span className="italic">Chill</span>
-              </span>
-            </div>
+          <Link href="/" className="flex items-center relative z-10" style={{ gap: 10 }}>
+            <Image
+              src="/logopng.webp"
+              alt="Steak N' Chill"
+              width={scrolled ? 36 : 44}
+              height={scrolled ? 36 : 44}
+              style={{
+                width: scrolled ? 36 : 44,
+                height: scrolled ? 36 : 44,
+                transition: "all 0.7s cubic-bezier(0.22, 1, 0.36, 1)",
+              }}
+            />
+            <span
+              className="font-heading text-gold"
+              style={{
+                fontSize: scrolled ? 18 : 22,
+                letterSpacing: "0.03em",
+                transition: "font-size 0.7s cubic-bezier(0.22, 1, 0.36, 1)",
+              }}
+            >
+              Steak N&apos; <span className="italic">Chill</span>
+            </span>
           </Link>
 
           {/* Desktop Links */}
