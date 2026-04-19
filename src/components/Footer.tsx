@@ -37,6 +37,7 @@ export default function Footer() {
 
       {/* Main footer */}
       <div
+        className="r-container r-section"
         style={{
           background:
             "linear-gradient(180deg, #0A0A0A 0%, #070707 100%)",
@@ -64,7 +65,7 @@ export default function Footer() {
 
           {/* Navigation centrée */}
           <div
-            className="flex items-center justify-center flex-wrap"
+            className="flex items-center justify-center flex-wrap r-gap r-mb"
             style={{ gap: 48, marginBottom: 48 }}
           >
             {navLinks.map((link) => (
@@ -93,7 +94,7 @@ export default function Footer() {
 
           {/* Infos grid */}
           <div
-            className="grid grid-cols-1 md:grid-cols-3 text-center"
+            className="grid grid-cols-1 md:grid-cols-3 text-center r-gap r-mb"
             style={{ gap: 40, marginBottom: 56 }}
           >
             {/* Adresse */}
@@ -201,6 +202,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div
+        className="r-container"
         style={{
           borderTop: "1px solid #1A1A1A",
           background: "#050505",

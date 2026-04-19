@@ -285,7 +285,7 @@ export default function MenuPage() {
 
       {/* CATEGORY TABS */}
       <section className="sticky z-40 bg-bg/95 backdrop-blur-xl border-b border-border" style={{ top: 88 }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 48px' }}>
+        <div className="r-container" style={{ maxWidth: 1100, margin: '0 auto', padding: '0 48px' }}>
           <div className="flex overflow-x-auto no-scrollbar" style={{ gap: 12, padding: '24px 0' }}>
             {categoryGroups.map((group, i) => (
               <button
@@ -306,7 +306,7 @@ export default function MenuPage() {
       </section>
 
       {/* MENU CONTENT */}
-      <section className="bg-bg" style={{ padding: '120px 48px', minHeight: '100vh' }}>
+      <section className="bg-bg r-section-pad" style={{ padding: '120px 48px', minHeight: '100vh' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
           {visibleCategories.map((category, catIndex) => (
             <Section key={category.id} delay={catIndex * 0.1}>
@@ -355,7 +355,7 @@ export default function MenuPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-surface text-center" style={{ padding: '120px 40px' }}>
+      <section className="bg-surface text-center r-section-pad" style={{ padding: '120px 40px' }}>
         <Section>
           <p className="text-gold tracking-[0.3em] uppercase" style={{ fontSize: 14, marginBottom: 24 }}>
             Envie de goûter ?

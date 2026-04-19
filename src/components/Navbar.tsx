@@ -26,6 +26,7 @@ export default function Navbar() {
   ];
 
   return (
+    <>
     <nav
       className="fixed z-50 transition-all duration-700 ease-out"
       style={{
@@ -47,6 +48,7 @@ export default function Navbar() {
       }}
     >
       <div
+        className="r-nav"
         style={{
           maxWidth: 1100,
           margin: "0 auto",
@@ -62,7 +64,7 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link href="/" className="flex items-center relative z-10" style={{ gap: 14 }}>
-            <div className="hidden sm:block">
+            <div>
               <span
                 className="font-heading text-gold"
                 style={{
@@ -182,52 +184,65 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div
-        className="md:hidden fixed inset-0 transition-all duration-500"
-        style={{
-          background: "rgba(7, 7, 7, 0.98)",
-          backdropFilter: "blur(24px)",
-          WebkitBackdropFilter: "blur(24px)",
-          opacity: mobileOpen ? 1 : 0,
-          pointerEvents: mobileOpen ? "auto" : "none",
-        }}
-      >
-        <div
-          className="flex flex-col items-center justify-center h-full"
-          style={{ gap: 48 }}
-        >
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="font-heading transition-colors"
-              style={{
-                fontSize: 36,
-                letterSpacing: "0.03em",
-                color: pathname === link.href ? "#C8A97E" : "#F5F5F5",
-              }}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="gold-divider-wide" style={{ marginTop: 16 }} />
-          <a
-            href="tel:+3226755551"
-            className="text-text-muted hover:text-gold transition-colors"
-            style={{ fontSize: 20 }}
-          >
-            02/675.55.51
-          </a>
-          <Link
-            href="/contact"
-            className="btn-gold"
-            style={{ marginTop: 8, borderRadius: 9999 }}
-          >
-            Réserver une table
-          </Link>
-        </div>
-      </div>
     </nav>
+
+    {/* Mobile Menu — outside nav to avoid backdrop-filter containing block */}
+    <div
+      className="md:hidden fixed inset-0 z-50 transition-all duration-500"
+      style={{
+        background: "rgba(7, 7, 7, 0.98)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
+        opacity: mobileOpen ? 1 : 0,
+        pointerEvents: mobileOpen ? "auto" : "none",
+      }}
+    >
+      {/* Close button */}
+      <button
+        onClick={() => setMobileOpen(false)}
+        className="absolute flex flex-col items-center justify-center"
+        style={{ top: 20, right: 20, width: 48, height: 48, zIndex: 10 }}
+        aria-label="Fermer"
+      >
+        <span className="block bg-gold" style={{ width: 26, height: 1, transform: "rotate(45deg) translateY(0.5px)" }} />
+        <span className="block bg-gold" style={{ width: 26, height: 1, transform: "rotate(-45deg) translateY(-0.5px)" }} />
+      </button>
+
+      <div
+        className="flex flex-col items-center justify-center h-full"
+        style={{ gap: 48 }}
+      >
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="font-heading transition-colors"
+            style={{
+              fontSize: 36,
+              letterSpacing: "0.03em",
+              color: pathname === link.href ? "#C8A97E" : "#F5F5F5",
+            }}
+          >
+            {link.label}
+          </Link>
+        ))}
+        <div className="gold-divider-wide" style={{ marginTop: 16 }} />
+        <a
+          href="tel:+3226755551"
+          className="text-text-muted hover:text-gold transition-colors"
+          style={{ fontSize: 20 }}
+        >
+          02/675.55.51
+        </a>
+        <Link
+          href="/contact"
+          className="btn-gold"
+          style={{ marginTop: 8, borderRadius: 9999 }}
+        >
+          Réserver une table
+        </Link>
+      </div>
+    </div>
+    </>
   );
 }

@@ -70,7 +70,7 @@ function Container({
 }) {
   return (
     <div
-      className={className}
+      className={`r-container ${className}`}
       style={{
         maxWidth: wide ? 1200 : 1100,
         marginLeft: "auto",
@@ -397,17 +397,17 @@ export default function Home() {
       </section>
 
       {/* ════════════════════ ABOUT / STORY ════════════════════ */}
-      <section className="bg-bg" style={{ padding: "80px 0 160px" }}>
+      <section className="bg-bg r-section" style={{ padding: "80px 0 160px" }}>
         <Container wide>
           <div
-            className="grid grid-cols-1 lg:grid-cols-12 items-stretch"
+            className="grid grid-cols-1 lg:grid-cols-12 items-stretch r-gap"
             style={{ gap: 56 }}
           >
             {/* Image */}
             <Reveal direction="left" className="lg:col-span-6 h-full">
-              <div className="relative h-full" style={{ minHeight: 400, padding: 20 }}>
+              <div className="relative h-full r-about-img" style={{ minHeight: 400, padding: 20 }}>
                 <div
-                  className="absolute"
+                  className="absolute r-about-border"
                   style={{
                     top: 40,
                     left: 40,
@@ -568,7 +568,7 @@ export default function Home() {
       </div>
 
       {/* ════════════════════ SIGNATURE DISHES ════════════════════ */}
-      <section className="relative" style={{ padding: "160px 0" }}>
+      <section className="relative r-section" style={{ padding: "160px 0" }}>
         <div className="absolute inset-0">
           <Image
             src="https://chefabdel.be/wp-content/uploads/2024/03/grilled-juicy-steak-cooking-fire-created-with-generative-ai-technology.jpg"
@@ -580,7 +580,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/85" />
         </div>
         <Container className="relative z-10">
-          <div className="text-center" style={{ marginBottom: 80 }}>
+          <div className="text-center r-mb" style={{ marginBottom: 80 }}>
             <Reveal>
               <p
                 className="text-gold uppercase"
@@ -711,9 +711,9 @@ export default function Home() {
       </section>
 
       {/* ════════════════════ REVIEWS ════════════════════ */}
-      <section className="bg-bg overflow-hidden" style={{ padding: "160px 0" }}>
+      <section className="bg-bg overflow-hidden r-section" style={{ padding: "160px 0" }}>
         <Container wide>
-          <div className="text-center" style={{ marginBottom: 80 }}>
+          <div className="text-center r-mb" style={{ marginBottom: 80 }}>
             <Reveal>
               <p
                 className="text-gold uppercase"
@@ -743,9 +743,9 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <div className="relative" style={{ minHeight: 620 }}>
+          <div className="relative r-reviews-wrap" style={{ minHeight: 620 }}>
             {/* iPhone mockup — left, absolute */}
-            <Reveal direction="left" className="absolute left-0 top-1/2 z-20 -translate-y-1/2">
+            <Reveal direction="left" className="r-iphone">
               <div className="relative" style={{ width: 280 }}>
                 <Image
                   src="/iphone-frame.png"
@@ -777,7 +777,7 @@ export default function Home() {
 
             {/* Testimonials carousel */}
             <div
-              className="absolute top-0 bottom-0 overflow-hidden"
+              className="absolute top-0 bottom-0 overflow-hidden r-reviews"
               style={{ left: 290, right: -200 }}
             >
               <div className="h-full flex items-center">
@@ -785,7 +785,7 @@ export default function Home() {
                   {[...reviews, ...reviews].map((review, i) => (
                     <div
                       key={`${review.name}-${i}`}
-                      className="group relative bg-surface flex-shrink-0 flex flex-col"
+                      className="group relative bg-surface flex-shrink-0 flex flex-col r-review-card"
                       style={{
                         width: 260,
                         minHeight: 420,
@@ -877,12 +877,12 @@ export default function Home() {
 
       {/* ════════════════════ EXPERIENCE ════════════════════ */}
       <section
-        className="bg-surface overflow-hidden"
+        className="bg-surface overflow-hidden r-section"
         style={{ padding: "160px 0" }}
       >
         <Container>
           <div
-            className="grid grid-cols-1 lg:grid-cols-2 items-center"
+            className="grid grid-cols-1 lg:grid-cols-2 items-center r-gap"
             style={{ gap: 80 }}
           >
             {/* Text */}
@@ -1026,7 +1026,7 @@ export default function Home() {
 
       {/* ════════════════════ CTA / RESERVATION ════════════════════ */}
       <section
-        className="relative overflow-hidden"
+        className="relative overflow-hidden r-section"
         style={{ padding: "180px 0" }}
       >
         <div className="absolute inset-0">

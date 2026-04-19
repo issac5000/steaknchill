@@ -77,9 +77,9 @@ export default function ContactPage() {
       </section>
 
       {/* CONTACT INFO + FORM */}
-      <section className="bg-bg" style={{ padding: '160px 60px' }}>
+      <section className="bg-bg r-section-pad" style={{ padding: '160px 60px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: 80 }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 r-gap" style={{ gap: 80 }}>
             {/* Left - Info */}
             <Section>
               <div>
@@ -173,7 +173,7 @@ export default function ContactPage() {
 
             {/* Right - Form */}
             <Section delay={0.2}>
-              <div className="bg-surface border border-border" style={{ borderRadius: 16, padding: '48px 44px' }}>
+              <div className="bg-surface border border-border r-card" style={{ borderRadius: 16, padding: '48px 44px' }}>
                 <h3 className="font-heading text-text" style={{ fontSize: 28, marginBottom: 16 }}>
                   Réservation
                 </h3>
@@ -299,7 +299,7 @@ export default function ContactPage() {
       {/* MAP */}
       <section className="bg-surface">
         <Section>
-          <div style={{ maxWidth: 1100, margin: '0 auto', padding: '96px 48px' }}>
+          <div className="r-container r-section" style={{ maxWidth: 1100, margin: '0 auto', padding: '96px 48px' }}>
             <div className="text-center" style={{ marginBottom: 56 }}>
               <p className="text-gold tracking-[0.3em] uppercase" style={{ fontSize: 14, marginBottom: 24 }}>
                 Localisation
@@ -309,7 +309,7 @@ export default function ContactPage() {
               </h2>
               <div className="gold-divider mx-auto" style={{ marginTop: 20 }} />
             </div>
-            <div className="relative w-full border border-border overflow-hidden" style={{ aspectRatio: '16/7', minHeight: 380, borderRadius: 16 }}>
+            <div className="relative w-full border border-border overflow-hidden r-map" style={{ aspectRatio: '16/7', minHeight: 380, borderRadius: 16 }}>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2518.8!2d4.3660!3d50.8540!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3c37e0e8b1a55%3A0x0!2sBd+du+Jardin+Botanique+7%2C+1000+Bruxelles!5e0!3m2!1sfr!2sbe!4v1709000000000!5m2!1sfr!2sbe"
                 width="100%"
