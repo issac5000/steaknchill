@@ -40,11 +40,45 @@ export default function ContactPage() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setLoading(true);
+    setError("");
+
+    try {
+      const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL;
+      if (!webhookUrl) {
+        throw new Error("URL du webhook non configurée.");
+      }
+
+      const res = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Erreur lors de l'envoi. Veuillez réessayer.");
+      }
+
+      setSubmitted(true);
+      setFormData({ name: "", email: "", phone: "", guests: "", date: "", message: "" });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Une erreur inattendue est survenue. Veuillez réessayer."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -181,6 +215,23 @@ export default function ContactPage() {
                   Remplissez le formulaire ci-dessous ou appelez-nous directement.
                 </p>
 
+                {error && (
+                  <div
+                    style={{
+                      padding: '16px 20px',
+                      borderRadius: 10,
+                      marginBottom: 24,
+                      border: '1px solid rgba(220, 80, 80, 0.3)',
+                      backgroundColor: 'rgba(220, 80, 80, 0.08)',
+                      color: '#e08080',
+                      fontSize: 15,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {error}
+                  </div>
+                )}
+
                 {submitted ? (
                   <div className="text-center" style={{ padding: '80px 0' }}>
                     <span className="text-gold block" style={{ fontSize: 56, marginBottom: 32 }}>✓</span>
@@ -285,8 +336,18 @@ export default function ContactPage() {
                       />
                     </div>
 
-                    <button type="submit" className="btn-gold w-full" style={{ marginTop: 8 }}>
-                      Envoyer la demande
+                    <button
+                      type="submit"
+                      className="btn-gold w-full"
+                      disabled={loading}
+                      style={{
+                        marginTop: 8,
+                        opacity: loading ? 0.6 : 1,
+                        cursor: loading ? 'not-allowed' : 'pointer',
+                        transition: 'opacity 0.2s',
+                      }}
+                    >
+                      {loading ? "Envoi en cours..." : "Envoyer la demande"}
                     </button>
                   </form>
                 )}
