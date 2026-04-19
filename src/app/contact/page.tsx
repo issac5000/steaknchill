@@ -192,7 +192,7 @@ export default function ContactPage() {
               <h2 className="font-heading text-text" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', marginBottom: 12 }}>
                 Réservez votre <span className="text-gradient-gold">table</span>
               </h2>
-              <div className="gold-divider mx-auto" style={{ marginTop: 16 }} />
+              <div className="gold-divider" style={{ marginTop: 16, marginLeft: 'auto', marginRight: 'auto' }} />
             </div>
 
             <div className="r-card" style={{
