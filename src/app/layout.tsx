@@ -37,6 +37,22 @@ export const metadata: Metadata = {
     siteName: "Steak N' Chill",
     locale: "fr_BE",
     type: "website",
+    url: "https://steaknchill.vercel.app",
+    images: [
+      {
+        url: "https://steaknchill.vercel.app/og-image.jpg",
+        width: 1160,
+        height: 1436,
+        alt: "Steak N' Chill - Steakhouse Bruxelles",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Steak N' Chill | Steakhouse Bruxelles",
+    description:
+      "Steakhouse halal au cœur de Bruxelles. Viandes d'exception, ambiance chaleureuse.",
+    images: ["https://steaknchill.vercel.app/og-image.jpg"],
   },
 };
 
