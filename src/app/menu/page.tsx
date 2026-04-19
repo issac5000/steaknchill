@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useInView } from "framer-motion";
@@ -249,6 +249,27 @@ const categoryGroups = [
 
 export default function MenuPage() {
   const [activeGroup, setActiveGroup] = useState(0);
+  const tabContainerRef = useRef<HTMLDivElement>(null);
+  const [indicator, setIndicator] = useState({ left: 0, width: 0 });
+
+  const updateIndicator = useCallback(() => {
+    const container = tabContainerRef.current;
+    if (!container) return;
+    const buttons = container.querySelectorAll<HTMLButtonElement>('button');
+    const activeBtn = buttons[activeGroup];
+    if (activeBtn) {
+      setIndicator({
+        left: activeBtn.offsetLeft,
+        width: activeBtn.offsetWidth,
+      });
+    }
+  }, [activeGroup]);
+
+  useEffect(() => {
+    updateIndicator();
+    window.addEventListener('resize', updateIndicator);
+    return () => window.removeEventListener('resize', updateIndicator);
+  }, [updateIndicator]);
 
   const visibleCategories = menuData.filter((cat) =>
     categoryGroups[activeGroup].ids.includes(cat.id)
@@ -284,23 +305,68 @@ export default function MenuPage() {
       </section>
 
       {/* CATEGORY TABS */}
-      <section className="sticky z-40 bg-bg/95 backdrop-blur-xl border-b border-border" style={{ top: 88 }}>
-        <div className="r-container" style={{ maxWidth: 1100, margin: '0 auto', padding: '0 48px' }}>
-          <div className="flex overflow-x-auto no-scrollbar" style={{ gap: 12, padding: '24px 0' }}>
-            {categoryGroups.map((group, i) => (
-              <button
-                key={group.label}
-                onClick={() => setActiveGroup(i)}
-                className={`whitespace-nowrap tracking-[0.1em] uppercase transition-all duration-300 border ${
-                  activeGroup === i
-                    ? "bg-gold/10 border-gold/40 text-gold"
-                    : "border-transparent text-text-muted hover:text-gold"
-                }`}
-                style={{ padding: '14px 28px', fontSize: 14, borderRadius: 10 }}
+      <section className="sticky z-40" style={{ top: 88 }}>
+        <div style={{
+          background: 'rgba(7, 7, 7, 0.85)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          borderBottom: '1px solid rgba(200, 169, 126, 0.1)',
+        }}>
+          <div className="r-container" style={{ maxWidth: 1100, margin: '0 auto', padding: '0 48px' }}>
+            <div style={{ position: 'relative', padding: '16px 0' }}>
+              <div
+                ref={tabContainerRef}
+                className="flex overflow-x-auto no-scrollbar"
+                style={{ gap: 6, position: 'relative', padding: '4px' }}
               >
-                {group.label}
-              </button>
-            ))}
+                {/* Sliding pill indicator */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 4,
+                    left: indicator.left,
+                    width: indicator.width,
+                    height: 'calc(100% - 8px)',
+                    background: 'linear-gradient(135deg, rgba(200, 169, 126, 0.15), rgba(200, 169, 126, 0.08))',
+                    border: '1px solid rgba(200, 169, 126, 0.25)',
+                    borderRadius: 10,
+                    transition: 'all 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
+                    pointerEvents: 'none',
+                  }}
+                />
+                {categoryGroups.map((group, i) => (
+                  <button
+                    key={group.label}
+                    onClick={() => setActiveGroup(i)}
+                    style={{
+                      padding: '12px 26px',
+                      fontSize: 13,
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase' as const,
+                      whiteSpace: 'nowrap' as const,
+                      color: activeGroup === i ? '#E8D5B5' : '#A3A3A3',
+                      background: 'transparent',
+                      border: 'none',
+                      borderRadius: 10,
+                      cursor: 'pointer',
+                      fontWeight: activeGroup === i ? 600 : 400,
+                      position: 'relative' as const,
+                      zIndex: 1,
+                      transition: 'color 0.35s ease, font-weight 0.35s ease',
+                      fontFamily: 'inherit',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (activeGroup !== i) e.currentTarget.style.color = '#C8A97E';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (activeGroup !== i) e.currentTarget.style.color = '#A3A3A3';
+                    }}
+                  >
+                    {group.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
