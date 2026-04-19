@@ -135,8 +135,7 @@ const signatureDishes = [
     description:
       "Impressionnante côte de boeuf épaisse, grillée à la perfection. Une pièce spectaculaire à partager.",
     price: "90€",
-    image:
-      "https://chefabdel.be/wp-content/uploads/2024/03/grilled-beef-steak-dark-wooden-surface.jpg",
+    image: "/tomawak.webp",
     className: "",
   },
   {
@@ -144,18 +143,16 @@ const signatureDishes = [
     description:
       "Bavette Wagyu F4 d'Australie, persillée à la perfection. Le summum de la viande maturée.",
     price: "50€",
-    image:
-      "https://chefabdel.be/wp-content/uploads/2024/03/grilled-juicy-steak-cooking-fire-created-with-generative-ai-technology.jpg",
-    className: "img-pos-top",
+    image: "/WagyuBMS9+.webp",
+    className: "",
   },
   {
     name: "Entrecôte KOBE A5",
     description:
       "L'excellence japonaise BMS 12+, 250g de pur plaisir. Une expérience gustative unique.",
     price: "90€",
-    image:
-      "https://chefabdel.be/wp-content/uploads/2024/03/hot-grilled-spare-ribs-with-barbecue-sauce-cutting-board-black-background-ai-generative.jpg",
-    className: "img-pos-top",
+    image: "/kobea5.webp",
+    className: "",
   },
 ];
 
@@ -246,15 +243,14 @@ export default function Home() {
           className="absolute inset-0"
           style={{ y: heroY, scale: heroScale }}
         >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-          >
-            <source src="/herovideo.mp4" type="video/mp4" />
-          </video>
+          <Image
+            src="/hero.webp"
+            alt="Steak N' Chill Hero"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
         </motion.div>
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-bg" />
@@ -632,9 +628,10 @@ export default function Home() {
                     ease: [0.22, 1, 0.36, 1],
                   }}
                 >
+                  {/* Image container — carré */}
                   <div
                     className="relative overflow-hidden"
-                    style={{ aspectRatio: "2/3" }}
+                    style={{ aspectRatio: "1/1" }}
                   >
                     <Image
                       src={dish.image}
@@ -643,7 +640,7 @@ export default function Home() {
                       className={`transition-transform duration-[1.2s] ease-out group-hover:scale-110 object-cover ${dish.className || ""}`}
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
 
                     <div
                       className="absolute backdrop-blur-xl"
@@ -664,36 +661,36 @@ export default function Home() {
                         {dish.price}
                       </span>
                     </div>
+                  </div>
 
-                    <div
-                      className="absolute bottom-0 left-0 right-0 backdrop-blur-xl"
-                      style={{
-                        padding: "28px 32px",
-                        background: "rgba(7,7,7,0.35)",
-                        borderTop: "1px solid rgba(200,169,126,0.2)",
-                      }}
+                  {/* Text — sous l'image */}
+                  <div
+                    style={{
+                      padding: "24px 28px",
+                      background: "rgba(15,15,15,0.95)",
+                      borderTop: "1px solid rgba(200,169,126,0.2)",
+                    }}
+                  >
+                    <h3
+                      className="font-heading text-gradient-gold whitespace-nowrap"
+                      style={{ fontSize: "clamp(18px, 2vw, 24px)", marginBottom: 10 }}
                     >
-                      <h3
-                        className="font-heading text-gradient-gold whitespace-nowrap"
-                        style={{ fontSize: "clamp(18px, 2vw, 24px)", marginBottom: 10 }}
-                      >
-                        {dish.name}
-                      </h3>
-                      <div
-                        style={{
-                          width: 40,
-                          height: 1,
-                          background: "linear-gradient(90deg, #C8A97E, transparent)",
-                          marginBottom: 12,
-                        }}
-                      />
-                      <p
-                        className="text-cream/70"
-                        style={{ fontSize: 13, lineHeight: 1.7 }}
-                      >
-                        {dish.description}
-                      </p>
-                    </div>
+                      {dish.name}
+                    </h3>
+                    <div
+                      style={{
+                        width: 40,
+                        height: 1,
+                        background: "linear-gradient(90deg, #C8A97E, transparent)",
+                        marginBottom: 12,
+                      }}
+                    />
+                    <p
+                      className="text-cream/70"
+                      style={{ fontSize: 13, lineHeight: 1.7 }}
+                    >
+                      {dish.description}
+                    </p>
                   </div>
                 </motion.div>
               </Reveal>
@@ -994,7 +991,7 @@ export default function Home() {
                     style={{ aspectRatio: "1/2.5" }}
                   >
                     <Image
-                      src="https://chefabdel.be/wp-content/uploads/2024/03/grilled-beef-steak-dark-wooden-surface.jpg"
+                      src="/momentunique1.webp"
                       alt="Steak grillé"
                       fill
                       className="object-cover"
@@ -1009,7 +1006,7 @@ export default function Home() {
                     style={{ aspectRatio: "1/2.5", marginTop: 48 }}
                   >
                     <Image
-                      src="https://chefabdel.be/wp-content/uploads/2024/03/hot-grilled-spare-ribs-with-barbecue-sauce-cutting-board-black-background-ai-generative.jpg"
+                      src="/momentunique2.webp"
                       alt="Côtes grillées"
                       fill
                       className="object-cover"
