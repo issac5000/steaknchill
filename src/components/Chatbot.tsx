@@ -158,7 +158,7 @@ function renderMarkdown(text: string): ReactNode[] {
 /* ─── Chatbot Component ─── */
 
 export default function Chatbot() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
 
   const suggestions = useMemo(() => [
     { icon: <UtensilsIcon />, text: t("chatbot.suggestion.0") },
@@ -236,7 +236,7 @@ export default function Chatbot() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: updated }),
+        body: JSON.stringify({ messages: updated, locale }),
       });
 
       if (!res.ok) throw new Error("API error");
