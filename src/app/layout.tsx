@@ -25,6 +25,10 @@ const greatVibes = Great_Vibes({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/logopng.webp",
+    apple: "/logopng.webp",
+  },
   title: "Steak N' Chill | Steakhouse - Bruxelles",
   description:
     "Restaurant Steak N' Chill à Bruxelles. Steakhouse & grillades de viandes d'exceptions. Wagyu, Tomahawk, Entrecôtes et plus. Bd du Jardin Botanique 7, 1000 Bruxelles. Réservez maintenant.",
