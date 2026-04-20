@@ -131,26 +131,26 @@ const stats = [
 
 const signatureDishes = [
   {
-    name: "Tomahawk 1,5kg",
+    name: "Tomahawk",
     description:
-      "Impressionnante côte de boeuf épaisse, grillée à la perfection. Une pièce spectaculaire à partager.",
-    price: "90€",
+      "Côte de boeuf +-1,5kg Pologne, grillée à la perfection. Une pièce spectaculaire à partager.",
+    price: "95€",
     image: "/tomawak.webp",
     className: "",
   },
   {
-    name: "Wagyu BMS9+",
+    name: "Bavette Wagyu",
     description:
-      "Bavette Wagyu F4 d'Australie, persillée à la perfection. Le summum de la viande maturée.",
-    price: "50€",
+      "Bavette Wagyu F4 BMS 9+ 300gr., persillée à la perfection. Le summum de la viande maturée.",
+    price: "60€",
     image: "/WagyuBMS9+.webp",
     className: "",
   },
   {
     name: "Entrecôte KOBE A5",
     description:
-      "L'excellence japonaise BMS 12+, 250g de pur plaisir. Une expérience gustative unique.",
-    price: "90€",
+      "Arrivage Japon A5 BMS 12+ 300gr. L'excellence japonaise, une expérience gustative unique.",
+    price: "120€",
     image: "/kobea5.webp",
     className: "",
   },
@@ -202,21 +202,21 @@ const reviews = [
 ];
 
 const marqueeItems = [
-  "Wagyu BMS9+",
+  "Bavette Wagyu",
   "✦",
   "Tomahawk",
   "✦",
-  "Entrecôte KOBE",
-  "✦",
-  "Dallas Steak",
+  "Entrecôte KOBE A5",
   "✦",
   "T-Bone",
   "✦",
-  "Picanha USA",
+  "Picanha Wagyu",
   "✦",
-  "Ribs Miel",
+  "Filet Pur",
   "✦",
-  "Entrecôte Galice",
+  "Ribs",
+  "✦",
+  "New York Steak",
   "✦",
 ];
 
@@ -472,7 +472,7 @@ export default function Home() {
                     marginBottom: 20,
                   }}
                 >
-                  Au cœur de Bruxelles, sur le Boulevard du Jardin Botanique, Steak N&apos; Chill vous invite à découvrir l&apos;art de la grillade portée à son plus haut niveau. Des viandes d&apos;exception sélectionnées avec soin — du Wagyu australien au Kobe japonais, en passant par l&apos;entrecôte de Galice maturée — chaque pièce est traitée avec le respect qu&apos;elle mérite.
+                  Au cœur de Bruxelles, sur le Boulevard du Jardin Botanique, Steak N&apos; Chill vous invite à découvrir l&apos;art de la grillade portée à son plus haut niveau. Des viandes d&apos;exception sélectionnées avec soin — du Wagyu BMS 9+ au Kobe japonais A5, en passant par le Tomahawk et la Picanha — chaque pièce est traitée avec le respect qu&apos;elle mérite.
                 </p>
               </Reveal>
 

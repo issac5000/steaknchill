@@ -20,92 +20,96 @@ HORAIRES:
 MENU COMPLET:
 
 ENTREES:
-- Scampi chef (legumes, sauce tomate, creme): 16€
-- Scampi a l'ail (ail au beurre chaud): 16€
-- Scampi frits (chapelure panko): 16€
-- Calamars frits: 16€
-- Carpaccio Angus (fines tranches de filet, roquette, parmesan, vinaigrette balsamique): 15€
-- Carpaccio de burrata Angus (filet de boeuf, roquette, parmesan, burrata, huile de truffe): 20€
-- Croquettes au fromage: 12€
-- Rouleau de pate feuilletee (farcie au feta et mozzarella): 12€
-- Carpaccio de pastrami (huile de truffe, balsamique, parmesan): 18€
-- Assiette d'entree mixte (cheesebal, calamars, langoustines, rouleau, oignon): 24€
-
-MEZZE:
-- Ezme piquant (tomates, poivrons, oignons, persil): 8€
-- Houmous (pois chiches, tahini, ail, citron): 8€
-- Mezze au fromage blanc (fromage blanc, yaourt, beurre fondu, menthe): 8€
-- Salade d'aubergines (aubergine, paprika roti, huile d'olive, grenade): 8€
-- Mix des mezzes froids et chauds: 16€
+- Scampi Chef (legumes et creme): 18€
+- Scampi a l'ail (beurre chaud persille): 18€
+- Calamar frit (anneau de calamar frit): 18€
+- Croquette de fromage (2 pieces): 14€
+- Carpaccio (boeuf finement tranche, roquette, parmesan, huile d'olive): 16€
+- Carpaccio Burrata (boeuf finement tranche, roquette, parmesan, huile d'olive et burrata): 20€
 
 SALADES:
-- Salade de poulet (poulet frit, sauce du chef, tomates cerises, concombre, parmesan): 15€
-- Salade de scampi (scampi, sauce du chef, tomates cerises, guacamole, concombre, parmesan): 15€
-- Salade de burrata (burrata, roquette, pesto, tomates cerises): 15€
-- Salade du chef (pomme verte, tomates cerises, fromage cottage, grenade, concombre): 15€
+- Salade Poulet (salade verte, tomates cerise, sauce cesar, concombre, parmesan): 18€
+- Salade Scampi (salade verte, tomates cerise, sauce chef, concombre, parmesan): 18€
+- Burratina (roquette, tomate cerise, creme balsamique): 17€
 
-VIANDES MATUREES (pieces premium):
-- Bavette Wagyu F4 BMS9+ (Australie 250g): 50€
-- Wagyu F4 BMS9+ propre (Australie 250g): 55€
-- Tomahawk 1,5 kg (cote de boeuf epaisse): 90€
-- Entrecote KOBE A5 BMS 12+ (250g): 90€
-- Entrecote blonde de Galice (affinee 62 jours, 300g): 55€
+VIANDES MATUREES (pieces premium, servies avec salade):
+- Bavette Wagyu F4 BMS 9+ (300g): 60€
+- Picanha Wagyu F4 BMS 9+ (300g): 65€
+- Entrecote Kobe A5 BMS 12+ (arrivage Japon, 300g): 120€
+- Tomahawk (cote de boeuf +-1,5kg Pologne): 95€
 
-VIANDES D'EXCEPTION (servies avec salade):
-- Steak T-Bone (Black Angus 500-600g): 37€
-- Picanha USA (rumsteck Black Angus 300g): 27€
-- Entrecote argentine (Black Angus 300g): 28€
-- Steak de New York (faux filet 300g): 27€
-- Lokum (filet pur Black Angus 250g): 32€
-- Dallas steak (cote de boeuf Black Angus 500-600g): 38€
-- Entrecote Simmental (Autriche 300g): 29€
-- Ribs miel/piquant (+-800g): 29€
+VIANDE D'EXCEPTION (servies avec salade):
+- T-Bone (500g Nouvelle Zelande): 40€
+- New York Steak (faux filet 300g Nouvelle Zelande): 29€
+- Entrecote (300g Argentine): 30€
+- Picanha (300g Uruguay): 29€
+- Filet Pur (250g Nouvelle Zelande): 36€
+- Entrecote Simmental (300g Autriche): 32€
+- Cote a l'os (500g Pologne): 40€
+- Ribs (+-800g miel ou spicy): 34€
 
-LES CLASSIQUES:
-- Steak de boeuf (300g): 23€
-- Cotelettes d'agneau 6 pieces (Nouvelle-Zelande): 28€
-- Escalope poulet: 18€
-- Kofte au fromage (boulettes farcies au fromage): 20€
-- Grillades mixtes (cotelettes, saucisse, kofte, brochette): 25€
-- Brochette de boeuf (Black Angus): 23€
-
-ACCOMPAGNEMENTS:
-- Frites maison: 3€ | Onion rings: 3,50€ | Frites patates douces: 4,50€
-- Frites cheddar bacon: 5€ | Legumes de saison: 4,50€ | Puree: 4,50€
-- Sauces (champignons, poivre, bearnaise, cheddar): 3,50€ | Mayo truffe: 2€
+CLASSICS:
+- Steak de boeuf (300g Nouvelle Zelande): 25€
+- Escalope de poulet (grille): 20€
+- Brochette de boeuf (300g): 25€
+- Cote d'agneau (5 pieces): 30€
 
 BURGERS ET FRITES:
-- Steak N' Chill (200g Black Angus, cheddar, bacon, oignons, roquette, sauce du chef): 19€
-- Burger de poulet (tenders, cheddar, salade, roquette, sauce poivre): 16€
-- Burger au poivre (200g Black Angus, cheddar, oignons, roquette, sauce poivre): 18€
-- Burger Truffe (200g Black Angus, cheddar, oignons, roquette, sauce truffe): 19€
-- Burger au pastrami (pastrami, gouda, oignons, roquette, sauce miel moutarde): 24€
-- Burger Ribs (ribs, gouda, oignons, roquette, BBQ, cheddar, sauce poivre): 24€
+- Burger Steak N' Chill (boeuf 200g, cheddar, salade, roquette, sauce maison, oignon caramelisees, bacon): 22€
+- Burger Truffe (boeuf 200g, cheddar, salade, roquette, mayonnaise truffe, oignon caramelisees): 22€
+- Burger Poulet (hachee de poulet, salade, emmental, roquette, oignon caramelisees, sauce poivre): 20€
+- Burger Pepper (boeuf 200g, cheddar, salade, roquette, sauce poivre, oignon caramelisees): 20€
 
 PATES:
-- Linguine a la truffe: 20€ | Linguines aux scampi: 18€
-- Linguine poulet creme champignons: 18€ | Linguine fruits de mer: 22€
-- Linguines pesto et burrata: 21€
+- Linguine aux truffes (sauce creme truffe et parmesan): 27€
+- Linguine aux scampis (poivrons et creme): 24€
+- Linguine poulet (sauce creme champignons et poulet): 22€
+
+SUPPLEMENTS:
+- Frites: 4€ | Frites cheddar bacon: 6,50€ | Onion rings: 6€
+- Frites truffe: 6€ | Frites patate douce: 6€ | Frites patate douce burrata: 9,50€
+- Legumes de saison: 5€ | Puree de pomme de terre: 5€
+- Sauce champignons: 4€ | Sauce poivre: 3€ | Sauce cheddar: 3€ | Sauce bearnaise: 3€
+- Mayonnaise truffe: 2,50€
 
 DESSERTS:
-- Dame blanche / Bresilienne: 8€ | Tiramisu: 9€
-- Cheesecake Sebastien (fondue chocolat) / Cheesecake speculoos: 9€
-- Moelleux au chocolat (glace vanille, creme): 10€
-- Baklava pistaches (+glaces 2,50€): 9€ | Tarte aux pommes: 10€ | Mousse chocolat: 9€
+- Baklava Pistache (feuillete croustillant, pistaches, sirop sucre, supplement glace 3€): 10€
+- Tarte aux pommes a la cannelle (glace vanille et chantilly): 10€
+- Cheesecake Sebastien (chocolat fondu et chantilly): 12€
+- Dame Blanche (vanille, chocolat coulant, chantilly): 10€
+- Dome au chocolat (mousse de chocolat): 10€
 
 BOISSONS CHAUDES:
-- Cafe / Cafe au lait / Espresso: 3,50€ | Americano / Double expresso: 3,90€
-- Latte Macchiato / Chocolat chaud: 5,50€ | The (noir, vert, camomille): 3,50€
+- Cafe: 4€ | Cafe long: 4,50€ | Espresso: 3,50€ | Double Espresso: 4€
+- Cappuccino: 5€ | Latte: 5,50€ | Chocolat chaud: 5,50€ | Irish Coffee: 9,50€
 
-SOFTS: Coca / Sprite / Fanta / Jus / Fuze tea: 3,50€ | Eau 1/2: 5,50€ | Red Bull: 5,50€
+SOFTS: Coca / Coca Zero / Fanta / Sprite / Bliss Tonic / Bliss Agrum / Ice Tea / Ice Tea Peach / Jus pomme / Jus pomme cerise / Jus orange / Jus multifruit: 3,50€ | Eau plate 1/2: 5,50€ | Eau petillante 1/2: 5,50€
 
-COCKTAILS SANS ALCOOL: Virgin Mojito / fraises / Passion / Pina Colada / Violette / Pasteque: 8€
-COCKTAILS: Mojito / Lady red cheek / Pornstar Martini / Pina Colada / Violette / Espresso Martini: 13€ | Steakchill mix: 15€
+MOCKTAILS (sans alcool):
+- Virgin Mojito: 10€ | Fraise: 10€ | Violette: 10€ | Passion: 10€
+
+COCKTAILS:
+- Mojito: 14€ | Red Velvet: 14€ | Royal Bloom: 14€ | Espresso Martini: 14€ | Pornstar Martini: 16€
+
+ALCOOLS:
+- Scotch Whisky Jack Daniels: 9€ | Red Label: 9€ | Chivas Regal: 10€
+- Vodka Smirnoff: 8€ | Absolute: 9€ | Erristo: 8€ | Erristof Rouge: 8€
+- Raki: 9€ | Gin Tonic: 11€
+
+APERITIFS / DIGESTIFS:
+- Kir: 8€ | Kir Royale: 12€ | Ricard: 8€ | Safari: 8€
+- Martini Rouge/Blanc: 8€ | Porto Rouge/Blanc: 8€
+- Picon Biere: 7€ | Picon Vin Blanc: 19€ | Tequila: 8€ | Prosecco: 11€
+- Baileys: 8€ | Limoncello: 5,50€ | Amaretto: 9€ | Cognac: 8€
+
+BIERES (Battin):
+- Pils 5°: 5,50€ | Blonde 5°: 6,50€ | Brune 5,2°: 6€
+- Kriek 4,3°: 5,50€ | Blanche 4,8°: 5,50€ | Triple 8°: 7€
 
 PLATS SIGNATURES:
-- Tomahawk 1,5kg (90€) - Impressionnante cote de boeuf epaisse, grillee a la perfection. Piece spectaculaire a partager.
-- Wagyu BMS9+ (50€) - Bavette Wagyu F4 d'Australie, persillee a la perfection. Le summum de la viande maturee.
-- Entrecote KOBE A5 BMS 12+ (90€) - L'excellence japonaise, 250g de pur plaisir. Experience gustative unique.
+- Tomahawk +-1,5kg (95€) - Impressionnante cote de boeuf Pologne, grillee a la perfection. Piece spectaculaire a partager.
+- Bavette Wagyu (60€) - Bavette Wagyu F4 BMS 9+ 300g. Le summum de la viande maturee.
+- Entrecote Kobe A5 BMS 12+ (120€) - Arrivage Japon, 300g de pur plaisir. Experience gustative unique.
 
 RESERVATION:
 - Par telephone: 02/675.55.51 (methode privilegiee)
