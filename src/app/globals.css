@@ -773,8 +773,8 @@ body {
     right: 16px;
     left: 16px;
     width: auto;
-    height: 400px;
-    max-height: 70vh;
+    height: 75vh;
+    max-height: 75vh;
     border-radius: 24px;
   }
 
