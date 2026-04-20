@@ -1,0 +1,157 @@
+{
+  "name": "Steak N' Chill — Confirmation réservation",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": ["callback_query"]
+      },
+      "id": "trigger-node",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300],
+      "credentials": {
+        "telegramApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const cb = $input.item.json;\nconst msg = (cb.callback_query && cb.callback_query.message) || cb.message || {};\nconst text = msg.text || '';\nconst chatId = String(msg.chat?.id || '');\nconst messageId = msg.message_id;\n\nif (text.includes('ACCEPTÉE')) {\n  return { json: { skip: true, chatId, messageId } };\n}\n\nconst get = (p) => { const m = text.match(p); return m ? m[1].trim() : ''; };\nconst name = get(/👤 Nom: (.+)/) || 'Client';\nconst email = get(/📧 Email: (.+)/);\nconst guests = get(/👥 Convives: (.+)/);\nconst date = get(/📅 Date: (.+)/);\n\nif (!email || email === 'Non renseigné') {\n  return { json: { skip: true, chatId, messageId } };\n}\n\nconst html = '<div style=\"font-family:Helvetica Neue,Arial,sans-serif;max-width:600px;margin:0 auto;background:#1a1a1a;border-radius:16px;overflow:hidden;\">'\n+ '<div style=\"background:linear-gradient(135deg,#1a1a1a,#2a2218);padding:40px;text-align:center;border-bottom:1px solid rgba(200,169,126,0.3);\">'\n+ '<h1 style=\"margin:0;font-size:24px;color:#C8A97E;font-weight:700;letter-spacing:0.05em;\">Steak N\\' Chill</h1>'\n+ '<p style=\"margin:8px 0 0;color:rgba(255,255,255,0.5);font-size:13px;letter-spacing:0.2em;text-transform:uppercase;\">Steakhouse</p>'\n+ '</div>'\n+ '<div style=\"padding:40px;\">'\n+ '<h2 style=\"margin:0 0 24px;color:#f5f5f5;font-size:20px;\">Réservation confirmée !</h2>'\n+ '<p style=\"color:#a0a0a0;font-size:15px;line-height:1.6;margin:0 0 32px;\">Bonjour ' + name + ',<br><br>Nous avons le plaisir de vous confirmer votre réservation.</p>'\n+ '<div style=\"padding:24px;background:rgba(200,169,126,0.08);border-radius:12px;border:1px solid rgba(200,169,126,0.2);\">'\n+ '<table style=\"width:100%;border-collapse:collapse;\">'\n+ '<tr><td style=\"padding:10px 0;color:#C8A97E;font-size:13px;\">Date</td><td style=\"padding:10px 0;color:#f5f5f5;font-size:15px;font-weight:600;text-align:right;\">' + date + '</td></tr>'\n+ '<tr><td style=\"padding:10px 0;color:#C8A97E;font-size:13px;\">Convives</td><td style=\"padding:10px 0;color:#f5f5f5;font-size:15px;font-weight:600;text-align:right;\">' + guests + '</td></tr>'\n+ '</table></div>'\n+ '<div style=\"margin-top:32px;padding:20px;background:rgba(255,255,255,0.03);border-radius:10px;\">'\n+ '<p style=\"margin:0 0 8px;color:#C8A97E;font-size:13px;text-transform:uppercase;letter-spacing:0.1em;\">Adresse</p>'\n+ '<p style=\"margin:0;color:#f5f5f5;font-size:14px;line-height:1.6;\">Bd du Jardin Botanique 7<br>1000 Bruxelles, Belgique</p>'\n+ '<p style=\"margin:12px 0 0;color:#C8A97E;font-size:13px;text-transform:uppercase;letter-spacing:0.1em;\">Téléphone</p>'\n+ '<p style=\"margin:4px 0 0;\"><a href=\"tel:+3226755551\" style=\"color:#f5f5f5;text-decoration:none;font-size:14px;\">02/675.55.51</a></p>'\n+ '</div>'\n+ '<p style=\"margin:32px 0 0;color:#666;font-size:12px;text-align:center;\">Nous avons hâte de vous accueillir !</p>'\n+ '</div></div>';\n\nconst updatedText = text.replace('🥩 NOUVELLE RÉSERVATION', '✅ RÉSERVATION ACCEPTÉE');\n\nreturn { json: { skip: false, email, name, date, guests, chatId, messageId, subject: 'Réservation confirmée — Steak N\\' Chill — ' + date, html, updatedText } };"
+      },
+      "id": "extract-node",
+      "name": "Extraire données & formater email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "skip-check",
+              "leftValue": "={{ $json.skip }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-node",
+      "name": "Pas encore acceptée ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [720, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "Steak N' Chill <info@synaplink.be>",
+        "toEmail": "={{ $json.email }}",
+        "subject": "={{ $json.subject }}",
+        "html": "={{ $json.html }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "email-node",
+      "name": "Envoyer Email confirmation",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [960, 200],
+      "credentials": {
+        "smtp": {
+          "id": "QTzxdQnruM8saQ1H",
+          "name": "SMTP account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "editMessageText",
+        "chatId": "={{ $json.chatId }}",
+        "messageId": "={{ $json.messageId }}",
+        "text": "={{ $json.updatedText }}",
+        "additionalFields": {}
+      },
+      "id": "edit-msg-node",
+      "name": "Marquer acceptée sur Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1200, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Telegram Bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extraire données & formater email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraire données & formater email": {
+      "main": [
+        [
+          {
+            "node": "Pas encore acceptée ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pas encore acceptée ?": {
+      "main": [
+        [
+          {
+            "node": "Envoyer Email confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Envoyer Email confirmation": {
+      "main": [
+        [
+          {
+            "node": "Marquer acceptée sur Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0
+}

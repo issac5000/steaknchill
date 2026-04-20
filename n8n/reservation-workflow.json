@@ -29,9 +29,25 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+        "chatId": "817436939",
         "text": "={{ $json.text }}",
-        "additionalFields": {}
+        "additionalFields": {
+          "replyMarkup": "inlineKeyboard",
+          "inlineKeyboard": {
+            "rows": [
+              {
+                "row": [
+                  {
+                    "text": "✅ Accepter la réservation",
+                    "additionalFields": {
+                      "callbackData": "accept"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
       },
       "id": "telegram-node",
       "name": "Envoyer Telegram",
