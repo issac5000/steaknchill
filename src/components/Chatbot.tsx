@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect, FormEvent, ReactNode } from "react";
+import { useState, useRef, useEffect, useMemo, FormEvent, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "@/i18n";
 
 interface Message {
   role: "user" | "assistant";
@@ -156,13 +157,14 @@ function renderMarkdown(text: string): ReactNode[] {
 
 /* ─── Chatbot Component ─── */
 
-const suggestions = [
-  { icon: <UtensilsIcon />, text: "Quels sont vos plats signatures ?" },
-  { icon: <ClockIcon />, text: "Quels sont vos horaires d'ouverture ?" },
-  { icon: <CalendarIcon />, text: "Comment réserver une table ?" },
-];
-
 export default function Chatbot() {
+  const { t } = useTranslation();
+
+  const suggestions = useMemo(() => [
+    { icon: <UtensilsIcon />, text: t("chatbot.suggestion.0") },
+    { icon: <ClockIcon />, text: t("chatbot.suggestion.1") },
+    { icon: <CalendarIcon />, text: t("chatbot.suggestion.2") },
+  ], [t]);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -280,8 +282,7 @@ export default function Chatbot() {
         ...prev,
         {
           role: "assistant",
-          content:
-            "Désolé, une erreur est survenue. Veuillez réessayer ou nous contacter directement au **02/675.55.51**.",
+          content: t("chatbot.error"),
         },
       ]);
     } finally {
@@ -343,7 +344,7 @@ export default function Chatbot() {
                       lineHeight: 1.3,
                     }}
                   >
-                    Assistant virtuel de Steak N&apos; Chill
+                    {t("chatbot.title")}
                   </div>
                   <div
                     style={{
@@ -353,7 +354,7 @@ export default function Chatbot() {
                       marginTop: "2px",
                     }}
                   >
-                    En ligne
+                    {t("chatbot.online")}
                   </div>
                 </div>
               </div>
@@ -382,15 +383,9 @@ export default function Chatbot() {
             <div className="chatbot-messages">
               {/* Welcome message */}
               <div className="chatbot-msg chatbot-msg-assistant">
-                <p style={{ margin: "4px 0", lineHeight: 1.55 }}>
-                  Bienvenue chez{" "}
-                  <strong style={{ color: "#C8A97E", fontWeight: 600 }}>
-                    Steak N&apos; Chill
-                  </strong>{" "}
-                  ! Je suis votre assistant virtuel. N&apos;hésitez pas à me poser vos
-                  questions sur notre carte, nos horaires ou pour réserver une
-                  table.
-                </p>
+                <div className="chatbot-md">
+                  {renderMarkdown(t("chatbot.welcome"))}
+                </div>
               </div>
 
               {messages.map((msg, i) => (
@@ -467,7 +462,7 @@ export default function Chatbot() {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Posez votre question..."
+                  placeholder={t("chatbot.placeholder")}
                   disabled={isLoading}
                   className="chatbot-input"
                 />
@@ -494,7 +489,7 @@ export default function Chatbot() {
             exit={{ opacity: 0, x: 20, scale: 0.9 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
-            Une question ? Je suis là pour vous.
+            {t("chatbot.tooltip")}
           </motion.div>
         )}
       </AnimatePresence>
@@ -503,7 +498,7 @@ export default function Chatbot() {
       <button
         className="chatbot-sphere"
         onClick={() => setIsOpen(!isOpen)}
-        aria-label="Ouvrir le chat"
+        aria-label={t("chatbot.openChat")}
       >
         {/* Fluid blobs */}
         <div className="sphere-fluid">

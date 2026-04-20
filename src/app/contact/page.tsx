@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import { useInView } from "framer-motion";
+import { useTranslation } from "@/i18n";
 
 function Section({
   children,
@@ -31,6 +32,7 @@ function Section({
 }
 
 export default function ContactPage() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -51,7 +53,7 @@ export default function ContactPage() {
     try {
       const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL;
       if (!webhookUrl) {
-        throw new Error("URL du webhook non configurée.");
+        throw new Error(t("contact.form.error.webhook"));
       }
 
       const res = await fetch(webhookUrl, {
@@ -64,7 +66,7 @@ export default function ContactPage() {
       });
 
       if (!res.ok) {
-        throw new Error("Erreur lors de l'envoi. Veuillez réessayer.");
+        throw new Error(t("contact.form.error.send"));
       }
 
       setSubmitted(true);
@@ -74,7 +76,7 @@ export default function ContactPage() {
       setError(
         err instanceof Error
           ? err.message
-          : "Une erreur inattendue est survenue. Veuillez réessayer."
+          : t("contact.form.error.generic")
       );
     } finally {
       setLoading(false);
@@ -97,15 +99,14 @@ export default function ContactPage() {
         </div>
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center" style={{ padding: '0 40px' }}>
           <p className="text-gold tracking-[0.3em] uppercase" style={{ fontSize: 14, marginBottom: 24 }}>
-            Nous Retrouver
+            {t("contact.hero.label")}
           </p>
           <h1 className="font-heading text-text" style={{ fontSize: 'clamp(3rem, 7vw, 4.5rem)', marginBottom: 24 }}>
-            <span className="text-gradient-gold">Contact</span>
+            <span className="text-gradient-gold">{t("contact.hero.title")}</span>
           </h1>
           <div className="gold-divider-wide mx-auto" style={{ marginBottom: 28 }} />
           <p className="text-text-muted" style={{ fontSize: 18, maxWidth: 520 }}>
-            Réservez votre table ou contactez-nous pour toute demande
-            d&apos;information. Nous serons ravis de vous accueillir.
+            {t("contact.hero.subtitle")}
           </p>
         </div>
       </section>
@@ -130,7 +131,7 @@ export default function ContactPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
-                <h3 className="text-text font-medium" style={{ fontSize: 16, marginBottom: 8 }}>Adresse</h3>
+                <h3 className="text-text font-medium" style={{ fontSize: 16, marginBottom: 8 }}>{t("contact.card.address")}</h3>
                 <p className="text-text-muted" style={{ fontSize: 14, lineHeight: 1.6 }}>
                   Bd du Jardin Botanique 7<br />1000 Bruxelles
                 </p>
@@ -150,7 +151,7 @@ export default function ContactPage() {
                 <svg className="text-gold" style={{ width: 24, height: 24, marginBottom: 20 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <h3 className="text-text font-medium" style={{ fontSize: 16, marginBottom: 8 }}>Téléphone</h3>
+                <h3 className="text-text font-medium" style={{ fontSize: 16, marginBottom: 8 }}>{t("contact.card.phone")}</h3>
                 <a href="tel:+3226755551" className="text-text-muted hover:text-gold transition-colors" style={{ fontSize: 14 }}>
                   02/675.55.51
                 </a>
@@ -170,10 +171,10 @@ export default function ContactPage() {
                 <svg className="text-gold" style={{ width: 24, height: 24, marginBottom: 20 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 className="text-text font-medium" style={{ fontSize: 16, marginBottom: 8 }}>Horaires</h3>
+                <h3 className="text-text font-medium" style={{ fontSize: 16, marginBottom: 8 }}>{t("contact.card.hours")}</h3>
                 <p className="text-text-muted" style={{ fontSize: 14, lineHeight: 1.6 }}>
-                  Lun–Ven : <span className="text-gold">12h–23h</span><br />
-                  Sam–Dim : <span className="text-gold">13h–23h</span>
+                  {t("contact.card.hours.weekday")} <span className="text-gold">{t("contact.card.hours.weekdayVal")}</span><br />
+                  {t("contact.card.hours.weekend")} <span className="text-gold">{t("contact.card.hours.weekendVal")}</span>
                 </p>
               </div>
             </div>
@@ -187,10 +188,10 @@ export default function ContactPage() {
           <Section>
             <div className="text-center" style={{ marginBottom: 40 }}>
               <p className="text-gold tracking-[0.3em] uppercase" style={{ fontSize: 13, marginBottom: 16 }}>
-                Réservation
+                {t("contact.form.label")}
               </p>
               <h2 className="font-heading text-text" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', marginBottom: 12 }}>
-                Réservez votre <span className="text-gradient-gold">table</span>
+                {t("contact.form.title")} <span className="text-gradient-gold">{t("contact.form.titleAccent")}</span>
               </h2>
               <div className="gold-divider" style={{ marginTop: 16, marginLeft: 'auto', marginRight: 'auto' }} />
             </div>
@@ -219,9 +220,9 @@ export default function ContactPage() {
               {submitted ? (
                 <div className="text-center" style={{ padding: '48px 0' }}>
                   <span className="text-gold block" style={{ fontSize: 48, marginBottom: 20 }}>✓</span>
-                  <h4 className="font-heading text-text" style={{ fontSize: 22, marginBottom: 12 }}>Merci !</h4>
+                  <h4 className="font-heading text-text" style={{ fontSize: 22, marginBottom: 12 }}>{t("contact.form.success.title")}</h4>
                   <p className="text-text-muted" style={{ fontSize: 15 }}>
-                    Votre demande a bien été envoyée. Nous vous recontacterons rapidement.
+                    {t("contact.form.success.text")}
                   </p>
                 </div>
               ) : (
@@ -229,7 +230,7 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 16 }}>
                     <div>
                       <label className="block text-text-muted uppercase tracking-wider" style={{ fontSize: 11, marginBottom: 10 }}>
-                        Nom *
+                        {t("contact.form.name")}
                       </label>
                       <input
                         type="text"
@@ -238,12 +239,12 @@ export default function ContactPage() {
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className="w-full bg-bg border border-border text-text focus:border-gold focus:outline-none transition-colors"
                         style={{ padding: '14px 16px', borderRadius: 10, fontSize: 15 }}
-                        placeholder="Votre nom"
+                        placeholder={t("contact.form.namePlaceholder")}
                       />
                     </div>
                     <div>
                       <label className="block text-text-muted uppercase tracking-wider" style={{ fontSize: 11, marginBottom: 10 }}>
-                        Email *
+                        {t("contact.form.email")}
                       </label>
                       <input
                         type="email"
@@ -252,7 +253,7 @@ export default function ContactPage() {
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="w-full bg-bg border border-border text-text focus:border-gold focus:outline-none transition-colors"
                         style={{ padding: '14px 16px', borderRadius: 10, fontSize: 15 }}
-                        placeholder="votre@email.com"
+                        placeholder={t("contact.form.emailPlaceholder")}
                       />
                     </div>
                   </div>
@@ -260,7 +261,7 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-3" style={{ gap: 16 }}>
                     <div>
                       <label className="block text-text-muted uppercase tracking-wider" style={{ fontSize: 11, marginBottom: 10 }}>
-                        Téléphone
+                        {t("contact.form.phone")}
                       </label>
                       <input
                         type="tel"
@@ -268,12 +269,12 @@ export default function ContactPage() {
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="w-full bg-bg border border-border text-text focus:border-gold focus:outline-none transition-colors"
                         style={{ padding: '14px 16px', borderRadius: 10, fontSize: 15 }}
-                        placeholder="+32..."
+                        placeholder={t("contact.form.phonePlaceholder")}
                       />
                     </div>
                     <div>
                       <label className="block text-text-muted uppercase tracking-wider" style={{ fontSize: 11, marginBottom: 10 }}>
-                        Convives
+                        {t("contact.form.guests")}
                       </label>
                       <select
                         value={formData.guests}
@@ -281,7 +282,7 @@ export default function ContactPage() {
                         className="w-full bg-bg border border-border text-text focus:border-gold focus:outline-none transition-colors appearance-none"
                         style={{ padding: '14px 16px', borderRadius: 10, fontSize: 15 }}
                       >
-                        <option value="">Nb.</option>
+                        <option value="">{t("contact.form.guestsPlaceholder")}</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -293,7 +294,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <label className="block text-text-muted uppercase tracking-wider" style={{ fontSize: 11, marginBottom: 10 }}>
-                        Date
+                        {t("contact.form.date")}
                       </label>
                       <input
                         type="date"
@@ -307,7 +308,7 @@ export default function ContactPage() {
 
                   <div>
                     <label className="block text-text-muted uppercase tracking-wider" style={{ fontSize: 11, marginBottom: 10 }}>
-                      Message
+                      {t("contact.form.message")}
                     </label>
                     <textarea
                       rows={3}
@@ -315,7 +316,7 @@ export default function ContactPage() {
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       className="w-full bg-bg border border-border text-text focus:border-gold focus:outline-none transition-colors resize-none"
                       style={{ padding: '14px 16px', borderRadius: 10, fontSize: 15 }}
-                      placeholder="Demande spéciale, allergie, occasion..."
+                      placeholder={t("contact.form.messagePlaceholder")}
                     />
                   </div>
 
@@ -330,7 +331,7 @@ export default function ContactPage() {
                       transition: 'opacity 0.2s',
                     }}
                   >
-                    {loading ? "Envoi en cours..." : "Envoyer la demande"}
+                    {loading ? t("contact.form.sending") : t("contact.form.submit")}
                   </button>
                 </form>
               )}
@@ -383,7 +384,7 @@ export default function ContactPage() {
                 className="btn-outline-gold"
                 style={{ padding: '14px 36px', fontSize: '0.75rem' }}
               >
-                Ouvrir dans Google Maps
+                {t("contact.map.cta")}
               </a>
             </div>
           </div>

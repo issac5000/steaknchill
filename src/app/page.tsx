@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -11,6 +11,7 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
+import { useTranslation } from "@/i18n";
 
 /* ─── REVEAL COMPONENT ─── */
 function Reveal({
@@ -121,86 +122,7 @@ function CountUp({
   );
 }
 
-/* ─── DATA ─── */
-const stats = [
-  { target: 22.7, decimals: 1, suffix: "K", label: "Abonnés Instagram" },
-  { target: 249, decimals: 0, suffix: "+", label: "Publications" },
-  { target: 7, decimals: 0, suffix: "j/7", label: "Ouvert pour vous" },
-  { target: 100, decimals: 0, suffix: "%", label: "Halal Certifié" },
-];
-
-const signatureDishes = [
-  {
-    name: "Tomahawk",
-    description:
-      "Côte de boeuf +-1,5kg Pologne, grillée à la perfection. Une pièce spectaculaire à partager.",
-    price: "95€",
-    image: "/tomawak.webp",
-    className: "",
-  },
-  {
-    name: "Bavette Wagyu",
-    description:
-      "Bavette Wagyu F4 BMS 9+ 300gr., persillée à la perfection. Le summum de la viande maturée.",
-    price: "60€",
-    image: "/WagyuBMS9+.webp",
-    className: "",
-  },
-  {
-    name: "Entrecôte KOBE A5",
-    description:
-      "Arrivage Japon A5 BMS 12+ 300gr. L'excellence japonaise, une expérience gustative unique.",
-    price: "120€",
-    image: "/kobea5.webp",
-    className: "",
-  },
-];
-
-const reviews = [
-  {
-    name: "Sophie L.",
-    rating: 5,
-    text: "Un steakhouse exceptionnel ! Les viandes maturées sont incroyables. Le service est attentionné et l'ambiance est chaleureuse. Je recommande vivement.",
-    source: "Google",
-  },
-  {
-    name: "Mehdi R.",
-    rating: 5,
-    text: "La meilleure viande que j'ai mangée à Bruxelles. Le Tomahawk est un spectacle à lui seul. Rapport qualité-prix excellent pour la qualité proposée.",
-    source: "Google",
-  },
-  {
-    name: "Claire D.",
-    rating: 5,
-    text: "Expérience culinaire incroyable. Les grillades sont sublimes. Les entrées et mezze sont tout aussi délicieux. Adresse à ne pas manquer.",
-    source: "Google",
-  },
-  {
-    name: "Karim B.",
-    rating: 5,
-    text: "Le Dallas Steak est une merveille. La cuisson est parfaite. Cadre raffiné, service impeccable. On reviendra sans hésiter.",
-    source: "Google",
-  },
-  {
-    name: "Nathalie V.",
-    rating: 5,
-    text: "Anniversaire inoubliable chez Steak N' Chill. Les burgers sont parmi les meilleurs de Bruxelles. La viande était fondante à souhait.",
-    source: "Google",
-  },
-  {
-    name: "Youssef A.",
-    rating: 5,
-    text: "Enfin un vrai steakhouse halal de qualité à Bruxelles. Les viandes sont exceptionnelles et le personnel est aux petits soins. Une adresse en or.",
-    source: "Google",
-  },
-  {
-    name: "Isabelle M.",
-    rating: 5,
-    text: "Tout était parfait du début à la fin. Le carpaccio en entrée puis l'entrecôte argentine en plat, un pur régal. L'ambiance est très agréable.",
-    source: "Google",
-  },
-];
-
+/* ─── MARQUEE DATA (no translation needed — product names) ─── */
 const marqueeItems = [
   "Bavette Wagyu",
   "✦",
@@ -220,20 +142,62 @@ const marqueeItems = [
   "✦",
 ];
 
-const experienceFeatures = [
-  "Viandes 100% Halal",
-  "Viandes maturées d'exception",
-  "Ouvert 7 jours sur 7",
-  "Bd du Jardin Botanique 7",
-];
-
 /* ─── PAGE ─── */
 export default function Home() {
+  const { t } = useTranslation();
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 0.3], [0, 150]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.1]);
+
+  const stats = useMemo(() => [
+    { target: 22.7, decimals: 1, suffix: "K", label: t("home.stats.followers") },
+    { target: 249, decimals: 0, suffix: "+", label: t("home.stats.posts") },
+    { target: 7, decimals: 0, suffix: "j/7", label: t("home.stats.open") },
+    { target: 100, decimals: 0, suffix: "%", label: t("home.stats.halal") },
+  ], [t]);
+
+  const signatureDishes = useMemo(() => [
+    {
+      name: t("home.dishes.tomahawk.name"),
+      description: t("home.dishes.tomahawk.desc"),
+      price: "95€",
+      image: "/tomawak.webp",
+      className: "",
+    },
+    {
+      name: t("home.dishes.wagyu.name"),
+      description: t("home.dishes.wagyu.desc"),
+      price: "60€",
+      image: "/WagyuBMS9+.webp",
+      className: "",
+    },
+    {
+      name: t("home.dishes.kobe.name"),
+      description: t("home.dishes.kobe.desc"),
+      price: "120€",
+      image: "/kobea5.webp",
+      className: "",
+    },
+  ], [t]);
+
+  const reviews = useMemo(() => [
+    { name: "Sophie L.", rating: 5, text: t("home.reviews.0"), source: "Google" },
+    { name: "Mehdi R.", rating: 5, text: t("home.reviews.1"), source: "Google" },
+    { name: "Claire D.", rating: 5, text: t("home.reviews.2"), source: "Google" },
+    { name: "Karim B.", rating: 5, text: t("home.reviews.3"), source: "Google" },
+    { name: "Nathalie V.", rating: 5, text: t("home.reviews.4"), source: "Google" },
+    { name: "Youssef A.", rating: 5, text: t("home.reviews.5"), source: "Google" },
+    { name: "Isabelle M.", rating: 5, text: t("home.reviews.6"), source: "Google" },
+  ], [t]);
+
+  const experienceFeatures = useMemo(() => [
+    t("home.exp.feat.halal"),
+    t("home.exp.feat.matured"),
+    t("home.exp.feat.open"),
+    t("home.exp.feat.address"),
+  ], [t]);
 
   return (
     <>
@@ -286,7 +250,7 @@ export default function Home() {
               marginBottom: 32,
             }}
           >
-            Bruxelles &mdash; Bd du Jardin Botanique 7
+            {t("home.hero.location")}
           </motion.p>
 
           <motion.h1
@@ -323,7 +287,7 @@ export default function Home() {
               marginBottom: 56,
             }}
           >
-            Steakhouse &amp; Grillades de Viandes d&apos;Exception
+            {t("home.hero.tagline")}
           </motion.p>
 
           <motion.div
@@ -334,10 +298,10 @@ export default function Home() {
             style={{ gap: 20 }}
           >
             <Link href="/menu" className="btn-gold">
-              Découvrir la Carte
+              {t("home.hero.cta.menu")}
             </Link>
             <Link href="/contact" className="btn-outline-gold">
-              Réserver une Table
+              {t("home.hero.cta.reserve")}
             </Link>
           </motion.div>
         </motion.div>
@@ -439,7 +403,7 @@ export default function Home() {
                     marginBottom: 24,
                   }}
                 >
-                  Notre Histoire
+                  {t("home.about.label")}
                 </p>
               </Reveal>
 
@@ -452,9 +416,9 @@ export default function Home() {
                     marginBottom: 32,
                   }}
                 >
-                  Un voyage culinaire{" "}
+                  {t("home.about.title")}{" "}
                   <span className="text-gradient-gold italic">
-                    d&apos;exception
+                    {t("home.about.titleAccent")}
                   </span>
                 </h2>
               </Reveal>
@@ -472,7 +436,7 @@ export default function Home() {
                     marginBottom: 20,
                   }}
                 >
-                  Au cœur de Bruxelles, sur le Boulevard du Jardin Botanique, Steak N&apos; Chill vous invite à découvrir l&apos;art de la grillade portée à son plus haut niveau. Des viandes d&apos;exception sélectionnées avec soin — du Wagyu BMS 9+ au Kobe japonais A5, en passant par le Tomahawk et la Picanha — chaque pièce est traitée avec le respect qu&apos;elle mérite.
+                  {t("home.about.p1")}
                 </p>
               </Reveal>
 
@@ -485,7 +449,7 @@ export default function Home() {
                     marginBottom: 48,
                   }}
                 >
-                  Carpaccios délicats, burgers gastronomiques, mezze savoureux et grillades spectaculaires composent une carte pensée pour les amoureux de la bonne viande. Une adresse devenue incontournable pour les connaisseurs bruxellois.
+                  {t("home.about.p2")}
                 </p>
               </Reveal>
 
@@ -508,7 +472,7 @@ export default function Home() {
                   style={{ gap: 32 }}
                 >
                   <Link href="/menu" className="btn-gold">
-                    Voir la Carte
+                    {t("home.about.cta")}
                   </Link>
                   <a
                     href="https://www.instagram.com/steaknchill.be/"
@@ -586,7 +550,7 @@ export default function Home() {
                   marginBottom: 24,
                 }}
               >
-                Nos Signatures
+                {t("home.dishes.label")}
               </p>
             </Reveal>
             <Reveal delay={0.1}>
@@ -597,8 +561,8 @@ export default function Home() {
                   marginBottom: 24,
                 }}
               >
-                Viandes d&apos;
-                <span className="text-gradient-gold italic">Exception</span>
+                {t("home.dishes.title")}
+                <span className="text-gradient-gold italic">{t("home.dishes.titleAccent")}</span>
               </h2>
             </Reveal>
             <Reveal delay={0.2} className="flex justify-center">
@@ -700,7 +664,7 @@ export default function Home() {
           <Reveal delay={0.3}>
             <div className="text-center" style={{ marginTop: 64 }}>
               <Link href="/menu" className="btn-outline-gold">
-                Voir toute la Carte
+                {t("home.dishes.cta")}
               </Link>
             </div>
           </Reveal>
@@ -720,7 +684,7 @@ export default function Home() {
                   marginBottom: 24,
                 }}
               >
-                Témoignages
+                {t("home.reviews.label")}
               </p>
             </Reveal>
             <Reveal delay={0.1}>
@@ -731,8 +695,8 @@ export default function Home() {
                   marginBottom: 24,
                 }}
               >
-                Ce que disent nos{" "}
-                <span className="text-gradient-gold italic">clients</span>
+                {t("home.reviews.title")}{" "}
+                <span className="text-gradient-gold italic">{t("home.reviews.titleAccent")}</span>
               </h2>
             </Reveal>
             <Reveal delay={0.2} className="flex justify-center">
@@ -865,7 +829,7 @@ export default function Home() {
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C16.67.014 16.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
                 </svg>
-                Suivez-nous sur Instagram
+                {t("home.reviews.cta")}
               </a>
             </div>
           </Reveal>
@@ -893,7 +857,7 @@ export default function Home() {
                     marginBottom: 24,
                   }}
                 >
-                  L&apos;Expérience
+                  {t("home.exp.label")}
                 </p>
               </Reveal>
               <Reveal delay={0.1}>
@@ -905,10 +869,10 @@ export default function Home() {
                     marginBottom: 32,
                   }}
                 >
-                  Plus qu&apos;un repas,
+                  {t("home.exp.title1")}
                   <br />
                   <span className="text-gradient-gold italic">
-                    un moment unique
+                    {t("home.exp.title2")}
                   </span>
                 </h2>
               </Reveal>
@@ -924,11 +888,7 @@ export default function Home() {
                     marginBottom: 40,
                   }}
                 >
-                  Chez Steak N&apos; Chill, chaque détail compte. De la sélection
-                  rigoureuse des viandes d&apos;exception à la cuisson parfaite
-                  sur nos grills, en passant par un service attentionné dans un
-                  cadre élégant — nous créons des expériences gastronomiques
-                  dont on se souvient.
+                  {t("home.exp.text")}
                 </p>
               </Reveal>
 
@@ -974,7 +934,7 @@ export default function Home() {
 
               <Reveal delay={0.6}>
                 <Link href="/contact" className="btn-gold">
-                  Réserver maintenant
+                  {t("home.exp.cta")}
                 </Link>
               </Reveal>
             </div>
@@ -1048,7 +1008,7 @@ export default function Home() {
                 marginBottom: 32,
               }}
             >
-              Réservation
+              {t("home.cta.label")}
             </p>
           </Reveal>
           <Reveal delay={0.1}>
@@ -1060,9 +1020,9 @@ export default function Home() {
                 marginBottom: 40,
               }}
             >
-              Votre table vous
+              {t("home.cta.title1")}
               <br />
-              <span className="text-gradient-gold italic">attend</span>
+              <span className="text-gradient-gold italic">{t("home.cta.title2")}</span>
             </h2>
           </Reveal>
           <Reveal delay={0.2} className="flex justify-center">
@@ -1081,8 +1041,7 @@ export default function Home() {
                 lineHeight: 1.8,
               }}
             >
-              Réservez votre table dès maintenant et laissez-vous transporter
-              par une expérience culinaire inoubliable au cœur de Bruxelles.
+              {t("home.cta.text")}
             </p>
           </Reveal>
           <Reveal delay={0.4}>
@@ -1091,10 +1050,10 @@ export default function Home() {
               style={{ gap: 20 }}
             >
               <a href="tel:+3226755551" className="btn-gold">
-                Appeler &mdash; 02/675.55.51
+                {t("home.cta.call")}
               </a>
               <Link href="/contact" className="btn-outline-gold">
-                Formulaire de Contact
+                {t("home.cta.form")}
               </Link>
             </div>
           </Reveal>

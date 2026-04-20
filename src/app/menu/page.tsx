@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useInView } from "framer-motion";
+import { useTranslation } from "@/i18n";
 
 function Section({
   children,
@@ -44,228 +45,28 @@ interface MenuCategory {
   items: MenuItem[];
 }
 
-const menuData: MenuCategory[] = [
-  {
-    id: "entrees",
-    title: "Entrées",
-    items: [
-      { name: "Scampi Chef", description: "Légumes et crème", price: "18€" },
-      { name: "Scampi à l'ail", description: "Beurre chaud persillé", price: "18€" },
-      { name: "Calamar frit", description: "Anneau de calamar frit", price: "18€" },
-      { name: "Croquette de fromage", description: "2 pièces", price: "14€" },
-      { name: "Carpaccio", description: "Carpaccio de bœuf finement tranché, roquette fraîche, parmesan et filet d'huile d'olive", price: "16€" },
-      { name: "Carpaccio Burrata", description: "Carpaccio de bœuf finement tranché, roquette fraîche, parmesan, filet d'huile d'olive et burrata", price: "20€" },
-    ],
-  },
-  {
-    id: "salades",
-    title: "Salades",
-    items: [
-      { name: "Salade Poulet", description: "Salade verte, tomates cerise, sauce cesar, concombre et parmesan", price: "18€" },
-      { name: "Salade Scampi", description: "Salade verte, tomates cerise, sauce chef, concombre et parmesan", price: "18€" },
-      { name: "Burratina", description: "Roquette, tomate cerise et crème balsamique", price: "17€" },
-    ],
-  },
-  {
-    id: "viandes-maturees",
-    title: "Viandes Maturées",
-    subtitle: "Toutes nos viandes sont accompagnées de salade",
-    items: [
-      { name: "Bavette Wagyu", description: "F4 BMS 9+ 300gr.", price: "60€" },
-      { name: "Picanha Wagyu", description: "F4 BMS 9+ 300gr.", price: "65€" },
-      { name: "Entrecôte Kobe A5", description: "Arrivage Japon A5 BMS 12+ 300gr.", price: "120€" },
-      { name: "Tomahawk", description: "Côte de boeuf +-1,5kg Pologne", price: "95€" },
-    ],
-  },
-  {
-    id: "viandes-exception",
-    title: "Viande d'Exception",
-    subtitle: "Toutes nos viandes sont accompagnées de salade",
-    items: [
-      { name: "T-Bone", description: "500gr. Nouvelle Zélande", price: "40€" },
-      { name: "New York Steak", description: "300gr. Faux filet Nouvelle Zélande", price: "29€" },
-      { name: "Entrecôte", description: "300gr. Argentine", price: "30€" },
-      { name: "Picanha", description: "300gr. Uruguay", price: "29€" },
-      { name: "Filet Pur", description: "250gr. Nouvelle Zélande", price: "36€" },
-      { name: "Entrecôte Simmental", description: "300gr. Autriche", price: "32€" },
-      { name: "Côte à l'os", description: "500gr. Pologne", price: "40€" },
-      { name: "Ribs", description: "+-800gr. miel ou spicy", price: "34€" },
-    ],
-  },
-  {
-    id: "classiques",
-    title: "Classics",
-    items: [
-      { name: "Steak de boeuf", description: "300gr. Nouvelle Zélande", price: "25€" },
-      { name: "Escalope de poulet", description: "Grillé", price: "20€" },
-      { name: "Brochette de boeuf", description: "300gr.", price: "25€" },
-      { name: "Côte d'agneau", description: "5 pièces", price: "30€" },
-    ],
-  },
-  {
-    id: "burgers",
-    title: "Burgers et Frites",
-    items: [
-      { name: "Burger Steak N' Chill", description: "Burger de boeuf 200gr. cheddar, salade verte, roquette, sauce maison, oignon caramélisées et bacon", price: "22€" },
-      { name: "Burger Truffe", description: "Burger de boeuf 200gr. cheddar, salade verte, roquette, mayonnaise truffe et oignon caramélisées", price: "22€" },
-      { name: "Burger Poulet", description: "Hachée de poulet, salade verte, emmental, roquette, oignon caramélisées et sauce poivre", price: "20€" },
-      { name: "Burger Pepper", description: "Burger de boeuf 200gr. cheddar, salade verte, roquette, sauce poivre et oignon caramélisées", price: "20€" },
-    ],
-  },
-  {
-    id: "pates",
-    title: "Pâtes",
-    items: [
-      { name: "Linguine aux truffes", description: "Sauce crème truffe et parmesan", price: "27€" },
-      { name: "Linguine aux scampis", description: "Poivrons et crème", price: "24€" },
-      { name: "Linguine poulet", description: "Sauce crème champignons et poulet", price: "22€" },
-    ],
-  },
-  {
-    id: "supplements",
-    title: "Suppléments",
-    items: [
-      { name: "Frites", price: "4€" },
-      { name: "Frites cheddar bacon", price: "6,50€" },
-      { name: "Onion rings", price: "6€" },
-      { name: "Frites truffe", price: "6€" },
-      { name: "Frites patate douce", price: "6€" },
-      { name: "Frites patate douce burrata", price: "9,50€" },
-      { name: "Légumes de saison", price: "5€" },
-      { name: "Sauce champignons", price: "4€" },
-      { name: "Sauce poivre", price: "3€" },
-      { name: "Sauce cheddar", price: "3€" },
-      { name: "Sauce béarnaise", price: "3€" },
-      { name: "Mayonnaise truffe", price: "2,50€" },
-      { name: "Purée de pomme de terre", price: "5€" },
-    ],
-  },
-  {
-    id: "desserts",
-    title: "Desserts",
-    items: [
-      { name: "Baklava Pistache", description: "Feuilleté croustillant garni de pistaches concassées, délicatement nappé de sirop sucré. Supplément glace 3€", price: "10€" },
-      { name: "Tarte aux pommes à la cannelle", description: "Servie tiède avec une boule de glace vanille et chantilly", price: "10€" },
-      { name: "Cheesecake Sébastien", description: "Servi avec chocolat fondu et chantilly", price: "12€" },
-      { name: "Dame Blanche", description: "Vanille crémeuse, chocolat coulant et nuage de chantilly", price: "10€" },
-      { name: "Dôme au chocolat", description: "Dôme au chocolat fourré avec une mousse de chocolat", price: "10€" },
-    ],
-  },
-  {
-    id: "boissons-chaudes",
-    title: "Boissons Chaudes",
-    items: [
-      { name: "Café", price: "4€" },
-      { name: "Café long", price: "4,50€" },
-      { name: "Espresso", price: "3,50€" },
-      { name: "Double Espresso", price: "4€" },
-      { name: "Cappuccino", price: "5€" },
-      { name: "Latte", price: "5,50€" },
-      { name: "Chocolat chaud", price: "5,50€" },
-      { name: "Irish Coffee", price: "9,50€" },
-    ],
-  },
-  {
-    id: "softs",
-    title: "Softs",
-    items: [
-      { name: "Coca-Cola", price: "3,50€" },
-      { name: "Coca Zero", price: "3,50€" },
-      { name: "Fanta", price: "3,50€" },
-      { name: "Sprite", price: "3,50€" },
-      { name: "Bliss Tonic", price: "3,50€" },
-      { name: "Bliss Agrum", price: "3,50€" },
-      { name: "Ice Tea", price: "3,50€" },
-      { name: "Ice Tea Peach", price: "3,50€" },
-      { name: "Jus de pomme", price: "3,50€" },
-      { name: "Jus de pomme cerise", price: "3,50€" },
-      { name: "Jus d'orange", price: "3,50€" },
-      { name: "Jus multifruit", price: "3,50€" },
-      { name: "Eau plate 1/2", price: "5,50€" },
-      { name: "Eau pétillante 1/2", price: "5,50€" },
-    ],
-  },
-  {
-    id: "mocktails",
-    title: "Mocktails",
-    items: [
-      { name: "Virgin Mojito", description: "Menthe fraîche écrasée, citron vert pressé et eau gazeuse", price: "10€" },
-      { name: "Fraise", description: "Fraise, pointe de citron et fine bulle pétillante", price: "10€" },
-      { name: "Violette", description: "Sirop de violette, citron léger et bulles fines", price: "10€" },
-      { name: "Passion", description: "Passion exotique, touche d'agrumes et eau pétillante", price: "10€" },
-    ],
-  },
-  {
-    id: "cocktails",
-    title: "Cocktails",
-    items: [
-      { name: "Mojito", description: "Menthe fraîche écrasée, citron vert pressé, vodka et eau gazeuse", price: "14€" },
-      { name: "Red Velvet", description: "Fraise mixée, pointe de citron, vodka et fine bulle pétillante", price: "14€" },
-      { name: "Royal Bloom", description: "Sirop de violette, citron léger, vodka et bulles fines", price: "14€" },
-      { name: "Pornstar Martini", description: "Vodka, fruit de la passion et vanille, accompagné d'un shot de prosecco", price: "16€" },
-      { name: "Espresso Martini", description: "Vodka, espresso frais et liqueur de café", price: "14€" },
-    ],
-  },
-  {
-    id: "alcools",
-    title: "Alcools",
-    items: [
-      { name: "Scotch Whisky Jack Daniels", price: "9€" },
-      { name: "Scotch Whisky Red Label", price: "9€" },
-      { name: "Scotch Whisky Chivas Regal", price: "10€" },
-      { name: "Vodka Smirnoff", price: "8€" },
-      { name: "Vodka Absolute", price: "9€" },
-      { name: "Vodka Erristo", price: "8€" },
-      { name: "Vodka Erristof Rouge", price: "8€" },
-      { name: "Raki", price: "9€" },
-      { name: "Gin Tonic", price: "11€" },
-    ],
-  },
-  {
-    id: "aperitifs",
-    title: "Apéritifs / Digestifs",
-    items: [
-      { name: "Kir", price: "8€" },
-      { name: "Kir Royale", price: "12€" },
-      { name: "Ricard", price: "8€" },
-      { name: "Safari", price: "8€" },
-      { name: "Martini Rouge", price: "8€" },
-      { name: "Martini Blanc", price: "8€" },
-      { name: "Porto Rouge", price: "8€" },
-      { name: "Porto Blanc", price: "8€" },
-      { name: "Picon Bière", price: "7€" },
-      { name: "Picon Vin Blanc", price: "19€" },
-      { name: "Tequila", price: "8€" },
-      { name: "Prosecco", price: "11€" },
-      { name: "Baileys", price: "8€" },
-      { name: "Limoncello", price: "5,50€" },
-      { name: "Amaretto", price: "9€" },
-      { name: "Cognac", price: "8€" },
-    ],
-  },
-  {
-    id: "bieres",
-    title: "Bières",
-    items: [
-      { name: "Battin Pils 5°", price: "5,50€" },
-      { name: "Battin Blonde 5°", price: "6,50€" },
-      { name: "Battin Brune 5,2°", price: "6€" },
-      { name: "Battin Kriek 4,3°", price: "5,50€" },
-      { name: "Battin Blanche 4,8°", price: "5,50€" },
-      { name: "Battin Triple 8°", price: "7€" },
-    ],
-  },
-];
-
-const categoryGroups = [
-  { label: "Entrées", ids: ["entrees", "salades"] },
-  { label: "Viandes", ids: ["viandes-maturees", "viandes-exception", "classiques"] },
-  { label: "Burgers & Pâtes", ids: ["burgers", "pates"] },
-  { label: "Suppléments", ids: ["supplements"] },
-  { label: "Desserts & Boissons", ids: ["desserts", "boissons-chaudes", "softs", "mocktails", "cocktails", "alcools", "aperitifs", "bieres"] },
+// Prices and structure — always the same
+const menuStructure = [
+  { id: "entrees", itemCount: 6, prices: ["18€", "18€", "18€", "14€", "16€", "20€"] },
+  { id: "salades", itemCount: 3, prices: ["18€", "18€", "17€"] },
+  { id: "viandes-maturees", itemCount: 4, prices: ["60€", "65€", "120€", "95€"] },
+  { id: "viandes-exception", itemCount: 8, prices: ["40€", "29€", "30€", "29€", "36€", "32€", "40€", "34€"] },
+  { id: "classiques", itemCount: 4, prices: ["25€", "20€", "25€", "30€"] },
+  { id: "burgers", itemCount: 4, prices: ["22€", "22€", "20€", "20€"] },
+  { id: "pates", itemCount: 3, prices: ["27€", "24€", "22€"] },
+  { id: "supplements", itemCount: 13, prices: ["4€", "6,50€", "6€", "6€", "6€", "9,50€", "5€", "4€", "3€", "3€", "3€", "2,50€", "5€"] },
+  { id: "desserts", itemCount: 5, prices: ["10€", "10€", "12€", "10€", "10€"] },
+  { id: "boissons-chaudes", itemCount: 8, prices: ["4€", "4,50€", "3,50€", "4€", "5€", "5,50€", "5,50€", "9,50€"] },
+  { id: "softs", itemCount: 14, prices: ["3,50€", "3,50€", "3,50€", "3,50€", "3,50€", "3,50€", "3,50€", "3,50€", "3,50€", "3,50€", "3,50€", "3,50€", "5,50€", "5,50€"] },
+  { id: "mocktails", itemCount: 4, prices: ["10€", "10€", "10€", "10€"] },
+  { id: "cocktails", itemCount: 5, prices: ["14€", "14€", "14€", "16€", "14€"] },
+  { id: "alcools", itemCount: 9, prices: ["9€", "9€", "10€", "8€", "9€", "8€", "8€", "9€", "11€"] },
+  { id: "aperitifs", itemCount: 16, prices: ["8€", "12€", "8€", "8€", "8€", "8€", "8€", "8€", "7€", "19€", "8€", "11€", "8€", "5,50€", "9€", "8€"] },
+  { id: "bieres", itemCount: 6, prices: ["5,50€", "6,50€", "6€", "5,50€", "5,50€", "7€"] },
 ];
 
 export default function MenuPage() {
+  const { t } = useTranslation();
   const [activeGroup, setActiveGroup] = useState(0);
   const tabContainerRef = useRef<HTMLDivElement>(null);
   const [indicator, setIndicator] = useState({ left: 0, width: 0 });
@@ -289,6 +90,45 @@ export default function MenuPage() {
     return () => window.removeEventListener('resize', updateIndicator);
   }, [updateIndicator]);
 
+  // Build translated menu data
+  const menuData: MenuCategory[] = useMemo(() => {
+    return menuStructure.map((cat) => {
+      const items: MenuItem[] = [];
+      for (let i = 0; i < cat.itemCount; i++) {
+        const nameKey = `menu.item.${cat.id}.${i}.name`;
+        const descKey = `menu.item.${cat.id}.${i}.desc`;
+        const name = t(nameKey);
+        const desc = t(descKey);
+        items.push({
+          name,
+          description: desc !== descKey ? desc : undefined,
+          price: cat.prices[i],
+        });
+      }
+      const subKey = `menu.cat.${cat.id}.sub`;
+      const sub = t(subKey);
+      return {
+        id: cat.id,
+        title: t(`menu.cat.${cat.id}`),
+        subtitle: sub !== subKey ? sub : undefined,
+        items,
+      };
+    });
+  }, [t]);
+
+  const categoryGroups = useMemo(() => [
+    { label: t("menu.tab.entrees"), ids: ["entrees", "salades"] },
+    { label: t("menu.tab.viandes"), ids: ["viandes-maturees", "viandes-exception", "classiques"] },
+    { label: t("menu.tab.burgersPates"), ids: ["burgers", "pates"] },
+    { label: t("menu.tab.supplements"), ids: ["supplements"] },
+    { label: t("menu.tab.dessertsBeverages"), ids: ["desserts", "boissons-chaudes", "softs", "mocktails", "cocktails", "alcools", "aperitifs", "bieres"] },
+  ], [t]);
+
+  // Update indicator when language changes (tab labels may change width)
+  useEffect(() => {
+    updateIndicator();
+  }, [categoryGroups, updateIndicator]);
+
   const visibleCategories = menuData.filter((cat) =>
     categoryGroups[activeGroup].ids.includes(cat.id)
   );
@@ -300,7 +140,7 @@ export default function MenuPage() {
         <div className="absolute inset-0">
           <Image
             src="https://chefabdel.be/wp-content/uploads/2024/03/grilled-beef-steak-dark-wooden-surface.jpg"
-            alt="La Carte"
+            alt={t("menu.hero.titleAccent")}
             fill
             priority
             className="object-cover"
@@ -309,15 +149,14 @@ export default function MenuPage() {
         </div>
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center" style={{ padding: '0 40px' }}>
           <p className="text-gold tracking-[0.3em] uppercase" style={{ fontSize: 14, marginBottom: 24 }}>
-            Steak N&apos; Chill
+            {t("menu.hero.label")}
           </p>
           <h1 className="font-heading text-text" style={{ fontSize: 'clamp(3rem, 7vw, 4.5rem)', marginBottom: 24 }}>
-            La <span className="text-gradient-gold">Carte</span>
+            {t("menu.hero.title")} <span className="text-gradient-gold">{t("menu.hero.titleAccent")}</span>
           </h1>
           <div className="gold-divider-wide mx-auto" style={{ marginBottom: 28 }} />
           <p className="text-text-muted" style={{ fontSize: 18, maxWidth: 520 }}>
-            Une carte soigneusement élaborée autour de viandes d&apos;exception,
-            burgers gastronomiques, pâtes et grillades spectaculaires.
+            {t("menu.hero.subtitle")}
           </p>
         </div>
       </section>
@@ -459,10 +298,10 @@ export default function MenuPage() {
       <section className="bg-surface text-center r-section-pad" style={{ padding: '120px 40px' }}>
         <Section>
           <p className="text-gold tracking-[0.3em] uppercase" style={{ fontSize: 14, marginBottom: 24 }}>
-            Envie de goûter ?
+            {t("menu.cta.label")}
           </p>
           <h2 className="font-heading text-text" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: 40 }}>
-            Réservez votre <span className="text-gradient-gold">table</span>
+            {t("menu.cta.title")} <span className="text-gradient-gold">{t("menu.cta.titleAccent")}</span>
           </h2>
           <div className="gold-divider-wide mx-auto" style={{ marginBottom: 48 }} />
           <div className="flex flex-col sm:flex-row justify-center" style={{ gap: 24 }}>
@@ -470,7 +309,7 @@ export default function MenuPage() {
               02/675.55.51
             </a>
             <Link href="/contact" className="btn-outline-gold">
-              Nous contacter
+              {t("menu.cta.contact")}
             </Link>
           </div>
         </Section>

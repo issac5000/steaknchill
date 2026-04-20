@@ -4,11 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "@/i18n";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -21,9 +24,9 @@ export default function Navbar() {
   }, [pathname]);
 
   const navLinks = [
-    { href: "/", label: "Accueil" },
-    { href: "/menu", label: "La Carte" },
-    { href: "/contact", label: "Contact" },
+    { href: "/", label: t("nav.home") },
+    { href: "/menu", label: t("nav.menu") },
+    { href: "/contact", label: t("nav.contact") },
   ];
 
   return (
@@ -125,7 +128,8 @@ export default function Navbar() {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center" style={{ gap: 24 }}>
+          <div className="hidden md:flex items-center" style={{ gap: 16 }}>
+            <LanguageSwitcher variant="desktop" />
             <a
               href="tel:+3226755551"
               className="text-text-muted hover:text-gold transition-colors"
@@ -151,17 +155,19 @@ export default function Navbar() {
                 transition: "all 0.7s cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             >
-              Réserver
+              {t("nav.reserve")}
             </Link>
           </div>
 
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden relative z-10 flex flex-col items-center justify-center"
-            style={{ width: 48, height: 48, gap: 7 }}
-            aria-label="Menu"
-          >
+          {/* Mobile: Language + Hamburger */}
+          <div className="md:hidden flex items-center relative z-10" style={{ gap: 8 }}>
+            <LanguageSwitcher variant="desktop" />
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="flex flex-col items-center justify-center"
+              style={{ width: 48, height: 48, gap: 7 }}
+              aria-label="Menu"
+            >
             <span
               className="block bg-gold transition-all duration-300"
               style={{
@@ -190,7 +196,8 @@ export default function Navbar() {
                   : "none",
               }}
             />
-          </button>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -212,7 +219,7 @@ export default function Navbar() {
         onClick={() => setMobileOpen(false)}
         className="absolute flex flex-col items-center justify-center"
         style={{ top: 20, right: 20, width: 48, height: 48, zIndex: 10 }}
-        aria-label="Fermer"
+        aria-label={t("nav.close")}
       >
         <span className="block bg-gold" style={{ width: 26, height: 1, transform: "rotate(45deg) translateY(0.5px)" }} />
         <span className="block bg-gold" style={{ width: 26, height: 1, transform: "rotate(-45deg) translateY(-0.5px)" }} />
@@ -237,6 +244,7 @@ export default function Navbar() {
           </Link>
         ))}
         <div className="gold-divider-wide" style={{ marginTop: 16 }} />
+        <LanguageSwitcher variant="mobile" />
         <a
           href="tel:+3226755551"
           className="text-text-muted hover:text-gold transition-colors"
@@ -249,7 +257,7 @@ export default function Navbar() {
           className="btn-gold"
           style={{ marginTop: 8, borderRadius: 9999 }}
         >
-          Réserver une table
+          {t("nav.reserveTable")}
         </Link>
       </div>
     </div>

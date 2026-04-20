@@ -1,10 +1,7 @@
-import Link from "next/link";
+"use client";
 
-const navLinks = [
-  { href: "/", label: "Accueil" },
-  { href: "/menu", label: "La Carte" },
-  { href: "/contact", label: "Contact" },
-];
+import Link from "next/link";
+import { useTranslation } from "@/i18n";
 
 const socials = [
   {
@@ -24,6 +21,14 @@ const socials = [
 ];
 
 export default function Footer() {
+  const { t } = useTranslation();
+
+  const navLinks = [
+    { href: "/", label: t("nav.home") },
+    { href: "/menu", label: t("nav.menu") },
+    { href: "/contact", label: t("nav.contact") },
+  ];
+
   return (
     <footer className="relative">
       {/* Gold separator line */}
@@ -59,11 +64,11 @@ export default function Footer() {
               className="text-text-muted"
               style={{ fontSize: 14, letterSpacing: "0.1em" }}
             >
-              Steakhouse &mdash; Bruxelles
+              {t("footer.tagline")}
             </p>
           </div>
 
-          {/* Navigation centrée */}
+          {/* Navigation centr��e */}
           <div
             className="flex items-center justify-center flex-wrap r-gap r-mb"
             style={{ gap: 48, marginBottom: 48 }}
@@ -107,7 +112,7 @@ export default function Footer() {
                   marginBottom: 16,
                 }}
               >
-                Adresse
+                {t("footer.address")}
               </p>
               <p
                 className="text-text-muted"
@@ -129,15 +134,15 @@ export default function Footer() {
                   marginBottom: 16,
                 }}
               >
-                Horaires
+                {t("footer.hours")}
               </p>
               <p
                 className="text-text-muted"
                 style={{ fontSize: 14, lineHeight: 1.8 }}
               >
-                Lun &mdash; Ven : <span className="text-text">12h00 &mdash; 23h00</span>
+                {t("footer.hours.weekday")} <span className="text-text">{t("footer.hours.weekdayVal")}</span>
                 <br />
-                Sam &mdash; Dim : <span className="text-text">13h00 &mdash; 23h00</span>
+                {t("footer.hours.weekend")} <span className="text-text">{t("footer.hours.weekendVal")}</span>
               </p>
             </div>
 
@@ -151,7 +156,7 @@ export default function Footer() {
                   marginBottom: 16,
                 }}
               >
-                Réservation
+                {t("footer.reservation")}
               </p>
               <a
                 href="tel:+3226755551"
@@ -214,11 +219,10 @@ export default function Footer() {
           style={{ maxWidth: 1100, margin: "0 auto", gap: 12 }}
         >
           <p className="text-text-muted/40" style={{ fontSize: 12 }}>
-            &copy; {new Date().getFullYear()} Steak N&apos; Chill. Tous droits
-            réservés.
+            &copy; {new Date().getFullYear()} Steak N&apos; Chill. {t("footer.rights")}
           </p>
           <p className="text-text-muted/60" style={{ fontSize: 12 }}>
-            Propulsé par{" "}
+            {t("footer.poweredBy")}{" "}
             <a
               href="https://synaplink.be"
               target="_blank"

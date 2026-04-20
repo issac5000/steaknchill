@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Chatbot from "@/components/Chatbot";
+import { LanguageProvider } from "@/i18n";
 
 const bebasNeue = Bebas_Neue({
   variable: "--font-heading",
@@ -71,10 +72,12 @@ export default function RootLayout({
       <body
         className={`${bebasNeue.variable} ${inter.variable} ${greatVibes.variable} antialiased grain-overlay`}
       >
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <Chatbot />
+        <LanguageProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <Chatbot />
+        </LanguageProvider>
       </body>
     </html>
   );
