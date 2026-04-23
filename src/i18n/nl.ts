@@ -355,6 +355,9 @@ const nl: Record<string, string> = {
   "chatbot.suggestion.1": "Wat zijn jullie openingsuren?",
   "chatbot.suggestion.2": "Hoe kan ik een tafel reserveren?",
   "chatbot.openChat": "Chat openen",
+  "chatbot.consent.text": "Deze assistent maakt gebruik van kunstmatige intelligentie om u te helpen. Uw berichten worden verwerkt door een externe dienst en worden niet bewaard na het gesprek.",
+  "chatbot.consent.accept": "Begrepen, start de chat",
+  "chatbot.consent.badge": "AI",
 };
 
 export default nl;

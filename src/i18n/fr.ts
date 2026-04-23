@@ -355,6 +355,9 @@ const fr: Record<string, string> = {
   "chatbot.suggestion.1": "Quels sont vos horaires d'ouverture ?",
   "chatbot.suggestion.2": "Comment réserver une table ?",
   "chatbot.openChat": "Ouvrir le chat",
+  "chatbot.consent.text": "Cet assistant utilise l'intelligence artificielle pour vous aider. Vos messages sont traités par un service externe et ne sont pas conservés après la conversation.",
+  "chatbot.consent.accept": "Compris, commencer",
+  "chatbot.consent.badge": "IA",
 };
 
 export default fr;

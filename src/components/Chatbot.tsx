@@ -171,8 +171,21 @@ export default function Chatbot() {
   const [isLoading, setIsLoading] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");
   const [showTooltip, setShowTooltip] = useState(false);
+  const [hasConsented, setHasConsented] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Check localStorage for prior consent
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHasConsented(localStorage.getItem("chatbot-consent") === "true");
+    }
+  }, []);
+
+  const acceptConsent = () => {
+    localStorage.setItem("chatbot-consent", "true");
+    setHasConsented(true);
+  };
 
   const showSuggestions = messages.length === 0 && !isLoading;
 
@@ -379,102 +392,149 @@ export default function Chatbot() {
               </button>
             </div>
 
-            {/* Messages */}
-            <div className="chatbot-messages">
-              {/* Welcome message */}
-              <div className="chatbot-msg chatbot-msg-assistant">
-                <div className="chatbot-md">
-                  {renderMarkdown(t("chatbot.welcome"))}
-                </div>
-              </div>
-
-              {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`chatbot-msg chatbot-msg-${msg.role}`}
-                >
-                  {msg.role === "assistant" ? (
-                    <div className="chatbot-md">
-                      {renderMarkdown(msg.content)}
-                    </div>
-                  ) : (
-                    msg.content
-                  )}
-                </div>
-              ))}
-
-              {/* Streaming */}
-              {streamingContent && (
-                <div className="chatbot-msg chatbot-msg-assistant">
-                  <div className="chatbot-md">
-                    {renderMarkdown(streamingContent)}
+            {/* ─── Consent Screen ─── */}
+            {!hasConsented ? (
+              <div className="chatbot-consent">
+                <div className="chatbot-consent-inner">
+                  <div className="chatbot-consent-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#C8A97E" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 2a3 3 0 0 0-3 3v1H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3V5a3 3 0 0 0-3-3z" />
+                      <path d="M12 12v4" />
+                      <circle cx="12" cy="10" r="0.5" fill="#C8A97E" />
+                    </svg>
                   </div>
-                  <span className="chatbot-cursor" />
-                </div>
-              )}
-
-              {/* Loading dots */}
-              {isLoading && !streamingContent && (
-                <div className="chatbot-msg chatbot-msg-assistant">
-                  <div className="chatbot-typing-dots">
-                    <span />
-                    <span />
-                    <span />
-                  </div>
-                </div>
-              )}
-
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Suggestions */}
-            {showSuggestions && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "8px",
-                  padding: "0 16px 12px",
-                }}
-              >
-                {suggestions.map((s, i) => (
-                  <button
-                    key={i}
-                    onClick={() => sendMessage(s.text)}
-                    className="chatbot-suggestion"
+                  <span
+                    style={{
+                      display: "inline-block",
+                      padding: "3px 10px",
+                      background: "rgba(200,169,126,0.12)",
+                      border: "1px solid rgba(200,169,126,0.2)",
+                      borderRadius: "20px",
+                      fontSize: "11px",
+                      color: "#C8A97E",
+                      fontWeight: 600,
+                      letterSpacing: "0.04em",
+                      marginBottom: "8px",
+                    }}
                   >
-                    <span style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
-                      {s.icon}
-                    </span>
-                    <span style={{ fontSize: "12.5px", color: "#D4D4D4", textAlign: "left" }}>
-                      {s.text}
-                    </span>
+                    {t("chatbot.consent.badge")}
+                  </span>
+                  <p
+                    style={{
+                      fontSize: "13px",
+                      lineHeight: 1.6,
+                      color: "#B0B0B0",
+                      margin: "0 0 20px",
+                      textAlign: "center",
+                    }}
+                  >
+                    {t("chatbot.consent.text")}
+                  </p>
+                  <button onClick={acceptConsent} className="chatbot-consent-btn">
+                    {t("chatbot.consent.accept")}
                   </button>
-                ))}
+                </div>
               </div>
-            )}
+            ) : (
+              <>
+                {/* Messages */}
+                <div className="chatbot-messages">
+                  {/* Welcome message */}
+                  <div className="chatbot-msg chatbot-msg-assistant">
+                    <div className="chatbot-md">
+                      {renderMarkdown(t("chatbot.welcome"))}
+                    </div>
+                  </div>
 
-            {/* Input Form */}
-            <form onSubmit={handleSubmit} style={{ padding: "12px 16px 16px" }}>
-              <div className="chatbot-input-wrapper">
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder={t("chatbot.placeholder")}
-                  disabled={isLoading}
-                  className="chatbot-input"
-                />
-                <button
-                  type="submit"
-                  disabled={isLoading || !input.trim()}
-                  className="chatbot-send-btn"
-                >
-                  <SendIcon />
-                </button>
-              </div>
-            </form>
+                  {messages.map((msg, i) => (
+                    <div
+                      key={i}
+                      className={`chatbot-msg chatbot-msg-${msg.role}`}
+                    >
+                      {msg.role === "assistant" ? (
+                        <div className="chatbot-md">
+                          {renderMarkdown(msg.content)}
+                        </div>
+                      ) : (
+                        msg.content
+                      )}
+                    </div>
+                  ))}
+
+                  {/* Streaming */}
+                  {streamingContent && (
+                    <div className="chatbot-msg chatbot-msg-assistant">
+                      <div className="chatbot-md">
+                        {renderMarkdown(streamingContent)}
+                      </div>
+                      <span className="chatbot-cursor" />
+                    </div>
+                  )}
+
+                  {/* Loading dots */}
+                  {isLoading && !streamingContent && (
+                    <div className="chatbot-msg chatbot-msg-assistant">
+                      <div className="chatbot-typing-dots">
+                        <span />
+                        <span />
+                        <span />
+                      </div>
+                    </div>
+                  )}
+
+                  <div ref={messagesEndRef} />
+                </div>
+
+                {/* Suggestions */}
+                {showSuggestions && (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "8px",
+                      padding: "0 16px 12px",
+                    }}
+                  >
+                    {suggestions.map((s, i) => (
+                      <button
+                        key={i}
+                        onClick={() => sendMessage(s.text)}
+                        className="chatbot-suggestion"
+                      >
+                        <span style={{ flexShrink: 0, display: "flex", alignItems: "center" }}>
+                          {s.icon}
+                        </span>
+                        <span style={{ fontSize: "12.5px", color: "#D4D4D4", textAlign: "left" }}>
+                          {s.text}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Input Form */}
+                <form onSubmit={handleSubmit} style={{ padding: "12px 16px 16px" }}>
+                  <div className="chatbot-input-wrapper">
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      placeholder={t("chatbot.placeholder")}
+                      disabled={isLoading}
+                      className="chatbot-input"
+                    />
+                    <button
+                      type="submit"
+                      disabled={isLoading || !input.trim()}
+                      className="chatbot-send-btn"
+                    >
+                      <SendIcon />
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
