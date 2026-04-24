@@ -10,54 +10,67 @@
           "allowedOrigins": "*"
         }
       },
-      "id": "webhook-node",
+      "id": "85f25414-9b2e-47ba-9f30-35f55655e381",
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
-      "position": [240, 300],
+      "position": [
+        -160,
+        144
+      ],
       "webhookId": "steaknchill-reservation"
     },
     {
       "parameters": {
-        "jsCode": "const raw = $input.first().json;\nconst item = raw.body || raw;\n\nconst name = item.name || 'Non renseigné';\nconst email = item.email || 'Non renseigné';\nconst phone = item.phone || 'Non renseigné';\nconst guests = item.guests || 'Non renseigné';\nconst date = item.date\n  ? new Date(item.date).toLocaleDateString('fr-BE', {\n      weekday: 'long',\n      year: 'numeric',\n      month: 'long',\n      day: 'numeric',\n    })\n  : 'Non renseignée';\nconst message = item.message || '—';\n\nconst receivedAt = item.submittedAt\n  ? new Date(item.submittedAt).toLocaleString('fr-BE', {\n      day: '2-digit',\n      month: '2-digit',\n      year: 'numeric',\n      hour: '2-digit',\n      minute: '2-digit',\n    })\n  : new Date().toLocaleString('fr-BE');\n\nconst text = [\n  '🥩 NOUVELLE RÉSERVATION',\n  '━━━━━━━━━━━━━━━━━━',\n  `👤 Nom: ${name}`,\n  `📧 Email: ${email}`,\n  `📱 Téléphone: ${phone}`,\n  `👥 Convives: ${guests} personne(s)`,\n  `📅 Date: ${date}`,\n  `💬 Message: ${message}`,\n  '━━━━━━━━━━━━━━━━━━',\n  `🕐 Reçu le ${receivedAt}`,\n].join('\\n');\n\nreturn [{ json: { text } }];"
+        "jsCode": "const raw = $input.first().json;\nconst item = raw.body || raw;\n\nconst name = item.name || 'Non renseigné';\nconst email = item.email || 'Non renseigné';\nconst phone = item.phone || 'Non renseigné';\nconst guests = item.guests || 'Non renseigné';\nconst date = item.date\n  ? new Date(item.date).toLocaleDateString('fr-BE', {\n      weekday: 'long',\n      year: 'numeric',\n      month: 'long',\n      day: 'numeric',\n    })\n  : 'Non renseignée';\nconst time = item.time || 'Non renseignée';\nconst message = item.message || '—';\n\nconst receivedAt = item.submittedAt\n  ? new Date(item.submittedAt).toLocaleString('fr-BE', {\n      day: '2-digit',\n      month: '2-digit',\n      year: 'numeric',\n      hour: '2-digit',\n      minute: '2-digit',\n    })\n  : new Date().toLocaleString('fr-BE');\n\nconst text = [\n  '🥩 NOUVELLE RÉSERVATION',\n  '━━━━━━━━━━━━━━━━━━',\n  `👤 Nom: ${name}`,\n  `📧 Email: ${email}`,\n  `📱 Téléphone: ${phone}`,\n  `👥 Convives: ${guests} personne(s)`,\n  `📅 Date: ${date}`,\n  `🕐 Heure: ${time}`,\n  `💬 Message: ${message}`,\n  '━━━━━━━━━━━━━━━━━━',\n  `📩 Reçu le ${receivedAt}`,\n].join('\\n');\n\nreturn [{ json: { text } }];"
       },
-      "id": "format-node",
+      "id": "8200a6db-0915-4b97-82f6-b0d3cff792a2",
       "name": "Formater message Telegram",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [480, 300]
+      "position": [
+        80,
+        144
+      ]
     },
     {
       "parameters": {
-        "chatId": "817436939",
+        "chatId": "REPLACE_WITH_CHAT_ID",
         "text": "={{ $json.text }}",
-        "additionalFields": {
-          "replyMarkup": "inlineKeyboard",
-          "inlineKeyboard": {
-            "rows": [
-              {
-                "row": [
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
                   {
-                    "text": "✅ Accepter la réservation",
+                    "text": " Accepter la réservation",
                     "additionalFields": {
-                      "callbackData": "accept"
+                      "callback_data": "accept"
                     }
                   }
                 ]
               }
-            ]
-          }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
         }
       },
-      "id": "telegram-node",
+      "id": "ff6cda97-35d7-4954-bfe1-6c6731f65734",
       "name": "Envoyer Telegram",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [720, 300],
+      "position": [
+        320,
+        144
+      ],
+      "webhookId": "562af4ef-b747-448c-9d14-7945b26e4305",
       "credentials": {
         "telegramApi": {
           "id": "REPLACE_WITH_CREDENTIAL_ID",
-          "name": "Telegram Bot"
+          "name": "REPLACE_WITH_CREDENTIAL_NAME"
         }
       }
     },
@@ -77,11 +90,14 @@
           }
         }
       },
-      "id": "respond-node",
+      "id": "c98b610a-e1c9-468a-86ea-a69f138aa604",
       "name": "Répondre au Webhook",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [960, 300]
+      "position": [
+        560,
+        144
+      ]
     }
   ],
   "connections": {
@@ -119,11 +135,9 @@
       ]
     }
   },
-  "settings": {
-    "executionOrder": "v1"
-  },
   "pinData": {},
-  "staticData": null,
-  "tags": [],
-  "triggerCount": 0
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "REPLACE_WITH_INSTANCE_ID"
+  }
 }

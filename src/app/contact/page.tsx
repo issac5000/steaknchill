@@ -39,6 +39,7 @@ export default function ContactPage() {
     phone: "",
     guests: "",
     date: "",
+    time: "",
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
@@ -70,7 +71,7 @@ export default function ContactPage() {
       }
 
       setSubmitted(true);
-      setFormData({ name: "", email: "", phone: "", guests: "", date: "", message: "" });
+      setFormData({ name: "", email: "", phone: "", guests: "", date: "", time: "", message: "" });
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
       setError(
@@ -258,7 +259,7 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3" style={{ gap: 16 }}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 16 }}>
                     <div>
                       <label className="block text-text-muted uppercase tracking-wider" style={{ fontSize: 11, marginBottom: 10 }}>
                         {t("contact.form.phone")}
@@ -292,6 +293,9 @@ export default function ContactPage() {
                         <option value="7">7+</option>
                       </select>
                     </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 16 }}>
                     <div>
                       <label className="block text-text-muted uppercase tracking-wider" style={{ fontSize: 11, marginBottom: 10 }}>
                         {t("contact.form.date")}
@@ -300,6 +304,18 @@ export default function ContactPage() {
                         type="date"
                         value={formData.date}
                         onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                        className="w-full bg-bg border border-border text-text focus:border-gold focus:outline-none transition-colors"
+                        style={{ padding: '14px 16px', borderRadius: 10, fontSize: 15 }}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-text-muted uppercase tracking-wider" style={{ fontSize: 11, marginBottom: 10 }}>
+                        {t("contact.form.time")}
+                      </label>
+                      <input
+                        type="time"
+                        value={formData.time}
+                        onChange={(e) => setFormData({ ...formData, time: e.target.value })}
                         className="w-full bg-bg border border-border text-text focus:border-gold focus:outline-none transition-colors"
                         style={{ padding: '14px 16px', borderRadius: 10, fontSize: 15 }}
                       />

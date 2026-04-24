@@ -321,6 +321,7 @@ const fr: Record<string, string> = {
   "contact.form.guests": "Convives",
   "contact.form.guestsPlaceholder": "Nb.",
   "contact.form.date": "Date",
+  "contact.form.time": "Heure",
   "contact.form.message": "Message",
   "contact.form.messagePlaceholder": "Demande spéciale, allergie, occasion...",
   "contact.form.submit": "Envoyer la demande",
